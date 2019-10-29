@@ -11,3 +11,5 @@
 2019-10-29 18:26:12,809 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.PropertyValueException: not-null property references a null or transient value : com.capgemini.go.dto.RetailerInventoryDTO.productDispatchTimestamp
 2019-10-29 18:43:44,466 DEBUG c.c.g.d.RetailerInventoryDaoImpl [main] Item is not present in inventory
 2019-10-29 18:49:09,334 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.exception.ConstraintViolationException: could not execute statement
+2019-10-29 23:06:50,029 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] Unable to locate Attribute  with the the given name [RETAILER_ID] on this ManagedType [com.capgemini.go.dto.RetailerInventoryDTO]
+2019-10-29 23:23:03,539 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] The requested data was not found

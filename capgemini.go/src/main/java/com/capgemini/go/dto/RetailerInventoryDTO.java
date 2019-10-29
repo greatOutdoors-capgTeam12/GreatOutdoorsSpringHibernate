@@ -104,13 +104,11 @@ public class RetailerInventoryDTO {
 		int hour = instance.get(Calendar.HOUR);
 		int minute = instance.get(Calendar.MINUTE);
 		int second = instance.get(Calendar.SECOND);
-		int milliSecond = instance.get(Calendar.MILLISECOND);
 
 		// String result = "{" + day + "/" + month + "/" + year + "}";
 		// String result = "{" + day + "/" + month + "/" + year + "::" + hour + ":" +
 		// minute + ":" + second + ":" + milliSecond + "}";
-		String result = "{Date: " + day + "/" + month + "/" + year + ", Time:" + hour + ":" + minute + ":" + second
-				+ ":" + milliSecond + "}";
+		String result = "{Date: " + day + "/" + month + "/" + year + ", Time:" + hour + ":" + minute + ":" + second + "}";
 		return result;
 	}
 

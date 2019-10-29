@@ -1,10 +1,12 @@
 package com.capgemini.go.dao;
 
-import java.net.ConnectException;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 import javax.persistence.RollbackException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -74,8 +76,34 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
-		// TODO Auto-generated method stub
-		return null;
+		List<RetailerInventoryDTO> result = null;	// List reference variable for query result
+		Transaction transaction = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			transaction = session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<RetailerInventoryDTO> criteriaQuery = builder.createQuery(RetailerInventoryDTO.class);
+			Root<RetailerInventoryDTO> retialerInventory = criteriaQuery.from(RetailerInventoryDTO.class);
+			criteriaQuery.select(retialerInventory);
+			criteriaQuery.where(builder.equal(retialerInventory.get("retailerId"), queryArguments.getRetailerId()));
+			// select * from RETAILER_INVENTORY where RETAILER_ID = ?
+			//Query<RetailerInventoryDTO> q = session.createQuery(criteriaQuery);
+			result = session.createQuery(criteriaQuery).getResultList(); // q.getResultList();
+			transaction.commit();
+		} catch (IllegalStateException error) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException("getOutlierItemDeliveryTime - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
+		} catch (IllegalArgumentException error) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException("getOutlierItemDeliveryTime - " + ExceptionConstants.INAPPROPRIATE_ARGUMENT_PASSED);
+		} finally {
+			session.close();
+		}
+		if (result == null || result.size() == 0) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(ExceptionConstants.NO_DATA_FOUND);
+			throw new RetailerInventoryException("getOutlierItemDeliveryTime - " + ExceptionConstants.NO_DATA_FOUND);
+		}
+		return result;
 	}
 
 	/*******************************************************************************************************
@@ -107,9 +135,6 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * Function Name : updateProductReceiveTimeStamp Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 21/9/2019 Description : to update receive timestamp of the product
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
@@ -164,9 +189,6 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * Function Name : updateProductSaleTimeStamp Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 21/9/2019 Description : to update sale timestamp of the product
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
@@ -224,9 +246,6 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * Function Name : insertItemInRetailerInventory Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 21/9/2019 Description : to insert a product into the inventory
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
@@ -274,9 +293,6 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * Function Name : deleteItemInRetailerInventory Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 29/9/2019 Description : to delete a product into the inventory
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
@@ -300,7 +316,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
-			session.delete(newItem);
+			session.remove(newItem);
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());

@@ -9,6 +9,8 @@ public class ExceptionConstants {
 	public static final String INAPPROPRIATE_METHOD_INVOCATION = "Method has been invoked at an illegal or inappropriate time";
 	public static final String FAILURE_COMMIT_CHANGES = "Could not commit changes to retailer inventory";
 	public static final String PRODUCT_ALREADY_PRESENT_IN_INVENTORY = "Item already present in inventory";
+	public static final String INAPPROPRIATE_ARGUMENT_PASSED = "Illegal arguments passed";
+	public static final String NO_DATA_FOUND = "The requested data was not found";
 	// END OF RETAILER INVENTORY EXCEPTION CONSTANTS
 }
 

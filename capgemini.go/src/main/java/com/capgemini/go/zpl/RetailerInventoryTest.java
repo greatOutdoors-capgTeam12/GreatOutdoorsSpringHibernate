@@ -1,6 +1,7 @@
 package com.capgemini.go.zpl;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import com.capgemini.go.dao.RetailerInventoryDao;
@@ -30,14 +31,23 @@ public class RetailerInventoryTest {
 		d.set(Calendar.MONTH, d.get(Calendar.MONTH) + 2);
 		argument3.setProductSaleTimestamp(d);
 		
+//		try {
+//			//System.out.println(retailer.insertItemInRetailerInventory(argument));
+//			System.out.println(retailer.deleteItemInRetailerInventory(argument));
+//			//System.out.println(retailer.insertItemInRetailerInventory(argument));
+//			//System.out.println(retailer.updateProductReceiveTimeStamp(argument2));
+//			//System.out.println(retailer.updateProductSaleTimeStamp(argument3));
+//		} catch (RetailerInventoryException e) {
+//			System.out.println(e.getMessage());
+//		}
+		
+		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO();
+		queryArguments.setRetailerId("rt10");
 		try {
-			//System.out.println(retailer.insertItemInRetailerInventory(argument));
-			System.out.println(retailer.deleteItemInRetailerInventory(argument));
-			//System.out.println(retailer.insertItemInRetailerInventory(argument));
-			//System.out.println(retailer.updateProductReceiveTimeStamp(argument2));
-			//System.out.println(retailer.updateProductSaleTimeStamp(argument3));
+			List<RetailerInventoryDTO> result = retailer.getOutlierItemDeliveryTime(queryArguments);
+			result.forEach(s -> System.out.println(s.toString()));
 		} catch (RetailerInventoryException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 }
