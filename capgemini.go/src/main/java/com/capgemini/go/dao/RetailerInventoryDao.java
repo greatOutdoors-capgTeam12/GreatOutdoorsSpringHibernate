@@ -38,7 +38,7 @@ public interface RetailerInventoryDao {
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierProductCategoryDeliveryTime - Input Parameters
 	 * :RetailerInventory queryArguments - Return Type : List<RetailerInventoryBean>
-	 * - Throws : N/A - Author : Kunal - Creation Date : 21/9/2019 - Description :
+	 * - Throws : N/A - Author : Sujit - Creation Date : 21/9/2019 - Description :
 	 * to get List of all product categories and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierProductCategoryDeliveryTime(RetailerInventoryDTO queryArguments)
@@ -47,7 +47,7 @@ public interface RetailerInventoryDao {
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierItemDeliveryTime - Input Parameters :
 	 * RetailerInventory queryArguments - Return Type : List<RetailerInventoryBean>
-	 * - Throws : N/A - Author : Kunal - Creation Date : 21/9/2019 - Description :
+	 * - Throws : N/A - Author : Sujit - Creation Date : 21/9/2019 - Description :
 	 * to get List of all products and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
@@ -56,7 +56,7 @@ public interface RetailerInventoryDao {
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierItemInOutlierProductCategoryDeliveryTime - Input
 	 * Parameters : RetailerInventory queryArguments - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
+	 * List<RetailerInventoryBean> - Throws : N/A - Author : Sujit - Creation Date :
 	 * 21/9/2019 - Description : to get List of all products in outlier categories
 	 * and their Delivery time periods
 	 * 

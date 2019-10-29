@@ -1,0 +1,6 @@
+2019-10-29 17:35:21,032 DEBUG c.c.g.z.Log4jTest [main] Debug Message 1
+2019-10-29 17:35:21,042 DEBUG c.c.g.z.A [main] Debug Message 1 from A
+2019-10-29 17:35:21,043 DEBUG c.c.g.z.B [main] Debug Message 1 from B
+2019-10-29 17:36:32,181 DEBUG c.c.g.z.Log4jTest [main] Debug Message 1
+2019-10-29 17:36:32,191 DEBUG c.c.g.z.A [main] Debug Message 1 from A
+2019-10-29 17:36:32,192 DEBUG c.c.g.z.B [main] Debug Message 1 from B
