@@ -5,3 +5,7 @@
 2019-10-29 17:36:32,191 DEBUG c.c.g.z.A [main] Debug Message 1 from A
 2019-10-29 17:36:32,192 DEBUG c.c.g.z.B [main] Debug Message 1 from B
 2019-10-29 18:09:42,935 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.exception.ConstraintViolationException: could not execute statement
+2019-10-29 18:21:33,982 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.exception.ConstraintViolationException: could not execute statement
+2019-10-29 18:22:56,255 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.PropertyValueException: not-null property references a null or transient value : com.capgemini.go.dto.RetailerInventoryDTO.productDispatchTimestamp
+2019-10-29 18:24:11,910 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.PropertyValueException: not-null property references a null or transient value : com.capgemini.go.dto.RetailerInventoryDTO.productDispatchTimestamp
+2019-10-29 18:26:12,809 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.PropertyValueException: not-null property references a null or transient value : com.capgemini.go.dto.RetailerInventoryDTO.productDispatchTimestamp

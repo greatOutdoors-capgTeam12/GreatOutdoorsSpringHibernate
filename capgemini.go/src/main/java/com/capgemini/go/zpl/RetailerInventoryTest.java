@@ -32,6 +32,7 @@ public class RetailerInventoryTest {
 		argument3.setProductSaleTimestamp(d);
 		
 		try {
+			System.out.println(retailer.deleteItemInRetailerInventory(argument));
 			System.out.println(retailer.insertItemInRetailerInventory(argument));
 			System.out.println(retailer.updateProductReceiveTimeStamp(argument2));
 			System.out.println(retailer.updateProductSaleTimeStamp(argument3));
