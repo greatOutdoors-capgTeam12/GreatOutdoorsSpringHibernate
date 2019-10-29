@@ -59,8 +59,6 @@ public interface RetailerInventoryDao {
 	 * List<RetailerInventoryBean> - Throws : N/A - Author : Sujit - Creation Date :
 	 * 21/9/2019 - Description : to get List of all products in outlier categories
 	 * and their Delivery time periods
-	 * 
-	 * @throws ConnectException
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierItemInOutlierProductCategoryDeliveryTime(
 			RetailerInventoryDTO queryArguments) throws RetailerException, ConnectException;
