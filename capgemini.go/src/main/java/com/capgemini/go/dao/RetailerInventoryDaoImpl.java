@@ -67,17 +67,17 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		 * retailerUserId
 		 */
 		RetailerInventoryDTO newItem = new RetailerInventoryDTO();
-		newItem.setProductUniqueId(queryArguments.getProductUIN());
-		newItem.setProductReceiveTimestamp(queryArguments.getProductRecieveTime());
+		newItem.setProductUniqueId(queryArguments.getProductUniqueId());
+		newItem.setProductReceiveTimestamp(queryArguments.getProductReceiveTimestamp());
 
 		Transaction transaction = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
-			List<RetailerInventoryEntity> itemList = session
-					.createQuery("from RetailerInventoryEntity", RetailerInventoryEntity.class).list();
+			List<RetailerInventoryDTO> itemList = session
+					.createQuery("from RetailerInventoryDTO", RetailerInventoryDTO.class).list();
 			boolean productNotFound = true;
-			for (RetailerInventoryEntity item : itemList) {
+			for (RetailerInventoryDTO item : itemList) {
 				if (item.getProductUniqueId().equals(newItem.getProductUniqueId())) {
 					newItem.setRetailerId(item.getRetailerId());
 					newItem.setProductCategory(item.getProductCategory());
@@ -87,20 +87,20 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 				}
 			}
 			if (productNotFound) {
-				GoLog.logger.error("Product is not a part of the Inventory");
+				GoLog.getLogger(RetailerInventoryDaoImpl.class).error("Product is not a part of the Inventory");
 				throw new RetailerException("Product is not a part of the Inventory");
 			} else {
 				session.merge(newItem);
 			}
 			transaction.commit();
 		} catch (IllegalStateException error) {
-			GoLog.logger.error(error.getMessage());
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
 			throw new RetailerException("Method has been invoked at an illegal or inappropriate time");
 		} catch (RollbackException error) {
-			GoLog.logger.error(error.getMessage());
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
 			throw new RetailerException("Could not Commit changes to Retailer Inventory");
 		} catch (PersistenceException error) {
-			GoLog.logger.error(error.getMessage());
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
 			throw new RetailerException("The item is already present in the inventory");
 		} finally {
 			session.close();
