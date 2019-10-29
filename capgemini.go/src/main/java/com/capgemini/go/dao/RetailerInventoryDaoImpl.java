@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.capgemini.go.dto.RetailerInventoryDTO;
+import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.RetailerException;
 import com.capgemini.go.utility.GoLog;
 import com.capgemini.go.utility.HibernateUtil;
@@ -140,21 +141,18 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 				}
 			}
 			if (productNotFound) {
-				GoLog.getLogger(RetailerInventoryDaoImpl.class).error("Product is not a part of the Inventory");
-				throw new RetailerException("Product is not a part of the Inventory");
+				GoLog.getLogger(RetailerInventoryDaoImpl.class).debug(ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
+				throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 			} else {
 				session.merge(newItem);
 			}
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Method has been invoked at an illegal or inappropriate time");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Could not Commit changes to Retailer Inventory");
-		} catch (PersistenceException error) {
-			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("The item is already present in the inventory");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} finally {
 			session.close();
 		}
@@ -201,21 +199,18 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 				}
 			}
 			if (productNotFound) {
-				GoLog.getLogger(RetailerInventoryDaoImpl.class).error("Product is not a part of the Inventory");
-				throw new RetailerException("Product is not a part of the Inventory");
+				GoLog.getLogger(RetailerInventoryDaoImpl.class).debug(ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
+				throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 			} else {
 				session.merge(newItem);
 			}
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Method has been invoked at an illegal or inappropriate time");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Could not Commit changes to Retailer Inventory");
-		} catch (PersistenceException error) {
-			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("The item is already present in the inventory");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} finally {
 			session.close();
 		}
@@ -257,13 +252,13 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Method has been invoked at an illegal or inappropriate time");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Could not Commit changes to Retailer Inventory");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} catch (PersistenceException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("The item is already present in the inventory");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.PRODUCT_ALREADY_PRESENT_IN_INVENTORY);
 		} finally {
 			session.close();
 		}
@@ -302,13 +297,13 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Method has been invoked at an illegal or inappropriate time");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("Could not Commit changes to Retailer Inventory");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} catch (PersistenceException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("The item is not present in the inventory");
+			throw new RetailerException("Retailer Dao Impl - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 		} finally {
 			session.close();
 		}
