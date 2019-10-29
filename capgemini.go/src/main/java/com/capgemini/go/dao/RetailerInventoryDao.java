@@ -3,7 +3,6 @@ package com.capgemini.go.dao;
 import java.net.ConnectException;
 import java.util.List;
 
-import com.capgemini.go.bean.RetailerInventoryBean;
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.RetailerException;
 
@@ -15,7 +14,7 @@ public interface RetailerInventoryDao {
 	 * Author : Vikas - Creation Date : 21/9/2019 - Description : to get List of all
 	 * products and their Monthly Shelf time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getMonthlyShelfTime(RetailerInventoryDTO queryArguments) 
+	public List<RetailerInventoryDTO> getMonthlyShelfTime(RetailerInventoryDTO queryArguments)
 			throws RetailerException, ConnectException;
 
 	/*******************************************************************************************************
@@ -24,7 +23,7 @@ public interface RetailerInventoryDao {
 	 * - Throws : N/A - Author : Vikas - Creation Date : 21/9/2019 - Description :
 	 * to get List of all products and their Quarterly Shelf time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getQuarterlyShelfTime(RetailerInventoryDTO queryArguments)
+	public List<RetailerInventoryDTO> getQuarterlyShelfTime(RetailerInventoryDTO queryArguments)
 			throws RetailerException, ConnectException;
 
 	/*******************************************************************************************************
@@ -33,7 +32,7 @@ public interface RetailerInventoryDao {
 	 * Author : Vikas - Creation Date : 21/9/2019 - Description : to get List of all
 	 * products and their Yearly Shelf time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getYearlyShelfTime(RetailerInventoryDTO queryArguments) 
+	public List<RetailerInventoryDTO> getYearlyShelfTime(RetailerInventoryDTO queryArguments)
 			throws RetailerException, ConnectException;
 
 	/*******************************************************************************************************
@@ -42,7 +41,7 @@ public interface RetailerInventoryDao {
 	 * - Throws : N/A - Author : Kunal - Creation Date : 21/9/2019 - Description :
 	 * to get List of all product categories and their Delivery time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getOutlierProductCategoryDeliveryTime(RetailerInventoryDTO queryArguments)
+	public List<RetailerInventoryDTO> getOutlierProductCategoryDeliveryTime(RetailerInventoryDTO queryArguments)
 			throws RetailerException, ConnectException;
 
 	/*******************************************************************************************************
@@ -51,7 +50,7 @@ public interface RetailerInventoryDao {
 	 * - Throws : N/A - Author : Kunal - Creation Date : 21/9/2019 - Description :
 	 * to get List of all products and their Delivery time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
+	public List<RetailerInventoryDTO> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
 			throws RetailerException, ConnectException;
 
 	/*******************************************************************************************************
@@ -63,7 +62,7 @@ public interface RetailerInventoryDao {
 	 * 
 	 * @throws ConnectException
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getOutlierItemInOutlierProductCategoryDeliveryTime(
+	public List<RetailerInventoryDTO> getOutlierItemInOutlierProductCategoryDeliveryTime(
 			RetailerInventoryDTO queryArguments) throws RetailerException, ConnectException;
 
 	/*******************************************************************************************************
@@ -73,9 +72,9 @@ public interface RetailerInventoryDao {
 	 * 
 	 * @throws ConnectException
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerException, ConnectException;
 	// end of Shelf Time Report and Delivery Time Report
-	
+
 	// Functions for Retailer Inventory Manipulation
 	/*******************************************************************************************************
 	 * Function Name : updateProductReceiveTimeStamp Input Parameters :
@@ -96,8 +95,7 @@ public interface RetailerInventoryDao {
 	 * @throws ConnectException
 	 * @throws RetailerException
 	 ********************************************************************************************************/
-	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) 
-			throws RetailerException, ConnectException;
+	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerException, ConnectException;
 
 	/*******************************************************************************************************
 	 * Function Name : insertItemInRetailerInventory Input Parameters :
