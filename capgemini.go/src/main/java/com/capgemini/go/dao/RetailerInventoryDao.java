@@ -4,7 +4,7 @@ import java.net.ConnectException;
 import java.util.List;
 
 import com.capgemini.go.dto.RetailerInventoryDTO;
-import com.capgemini.go.exception.RetailerException;
+import com.capgemini.go.exception.RetailerInventoryException;
 
 public interface RetailerInventoryDao {
 	// Shelf Time Report and Delivery Time Report
@@ -15,7 +15,7 @@ public interface RetailerInventoryDao {
 	 * products and their Monthly Shelf time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getMonthlyShelfTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getQuarterlyTimeReport - Input Parameters
@@ -24,7 +24,7 @@ public interface RetailerInventoryDao {
 	 * to get List of all products and their Quarterly Shelf time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getQuarterlyShelfTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getYearlyTimeReport - Input Parameters : RetailerInventory
@@ -33,7 +33,7 @@ public interface RetailerInventoryDao {
 	 * products and their Yearly Shelf time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getYearlyShelfTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierProductCategoryDeliveryTime - Input Parameters
@@ -42,7 +42,7 @@ public interface RetailerInventoryDao {
 	 * to get List of all product categories and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierProductCategoryDeliveryTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierItemDeliveryTime - Input Parameters :
@@ -51,7 +51,7 @@ public interface RetailerInventoryDao {
 	 * to get List of all products and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierItemInOutlierProductCategoryDeliveryTime - Input
@@ -61,7 +61,7 @@ public interface RetailerInventoryDao {
 	 * and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierItemInOutlierProductCategoryDeliveryTime(
-			RetailerInventoryDTO queryArguments) throws RetailerException, ConnectException;
+			RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
@@ -70,7 +70,7 @@ public interface RetailerInventoryDao {
 	 * 
 	 * @throws ConnectException
 	 ********************************************************************************************************/
-	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException;
 	// end of Shelf Time Report and Delivery Time Report
 
 	// Functions for Retailer Inventory Manipulation
@@ -83,7 +83,7 @@ public interface RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : updateProductSaleTimeStamp Input Parameters :
@@ -93,7 +93,7 @@ public interface RetailerInventoryDao {
 	 * @throws ConnectException
 	 * @throws RetailerException
 	 ********************************************************************************************************/
-	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerException, ConnectException;
+	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : insertItemInRetailerInventory Input Parameters :
@@ -104,7 +104,7 @@ public interface RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : deleteItemInRetailerInventory Input Parameters :
@@ -115,6 +115,6 @@ public interface RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 	// end of Functions for Retailer Inventory Manipulation
 }

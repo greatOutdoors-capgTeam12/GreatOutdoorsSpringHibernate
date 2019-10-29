@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.ExceptionConstants;
-import com.capgemini.go.exception.RetailerException;
+import com.capgemini.go.exception.RetailerInventoryException;
 import com.capgemini.go.utility.GoLog;
 import com.capgemini.go.utility.HibernateUtil;
 
@@ -25,7 +25,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * products and their Monthly Shelf time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getMonthlyShelfTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -37,7 +37,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * to get List of all products and their Quarterly Shelf time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getQuarterlyShelfTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -49,7 +49,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * products and their Yearly Shelf time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getYearlyShelfTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -61,7 +61,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * to get List of all product categories and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierProductCategoryDeliveryTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -73,7 +73,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * to get List of all products and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -86,7 +86,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * and their Delivery time periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getOutlierItemInOutlierProductCategoryDeliveryTime(
-			RetailerInventoryDTO queryArguments) throws RetailerException, ConnectException {
+			RetailerInventoryDTO queryArguments) throws RetailerInventoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -96,7 +96,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
 	 * 21/9/2019 - Description : to get List of all retailers in database
 	 ********************************************************************************************************/
-	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerException, ConnectException {
+	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -112,7 +112,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		boolean receiveTimestampUpdated = false;
 		/*
 		 * required arguments in `queryArguments` productUIN, productRecieveTime
@@ -142,17 +142,17 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			}
 			if (productNotFound) {
 				GoLog.getLogger(RetailerInventoryDaoImpl.class).debug(ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
-				throw new RetailerException("updateProductReceiveTimeStamp - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
+				throw new RetailerInventoryException("updateProductReceiveTimeStamp - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 			} else {
 				session.merge(newItem);
 			}
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("updateProductReceiveTimeStamp - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
+			throw new RetailerInventoryException("updateProductReceiveTimeStamp - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("updateProductReceiveTimeStamp - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
+			throw new RetailerInventoryException("updateProductReceiveTimeStamp - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} finally {
 			session.close();
 		}
@@ -169,7 +169,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		boolean saleTimestampUpdated = false;
 		/*
 		 * required arguments in `queryArguments` productUIN, productSaleTime
@@ -200,7 +200,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			}
 			if (productNotFound) {
 				GoLog.getLogger(RetailerInventoryDaoImpl.class).debug(ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
-				throw new RetailerException(
+				throw new RetailerInventoryException(
 						"updateProductSaleTimeStamp - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 			} else {
 				session.merge(newItem);
@@ -208,11 +208,11 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException(
+			throw new RetailerInventoryException(
 					"updateProductSaleTimeStamp - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("updateProductSaleTimeStamp - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
+			throw new RetailerInventoryException("updateProductSaleTimeStamp - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} finally {
 			session.close();
 		}
@@ -229,7 +229,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		boolean productInserted = false;
 		/*
 		 * required arguments in `queryArguments` retailerUserId, productCategory,
@@ -254,14 +254,14 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException(
+			throw new RetailerInventoryException(
 					"insertItemInRetailerInventory - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("insertItemInRetailerInventory - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
+			throw new RetailerInventoryException("insertItemInRetailerInventory - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} catch (PersistenceException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException(
+			throw new RetailerInventoryException(
 					"insertItemInRetailerInventory - " + ExceptionConstants.PRODUCT_ALREADY_PRESENT_IN_INVENTORY);
 		} finally {
 			session.close();
@@ -279,7 +279,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	public boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException {
+			throws RetailerInventoryException {
 		boolean itemDeleted = false;
 		/*
 		 * required arguments in `queryArguments` productUIN, retailerUserId
@@ -304,15 +304,11 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException(
+			throw new RetailerInventoryException(
 					"deleteItemInRetailerInventory - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
 		} catch (RollbackException error) {
 			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException("deleteItemInRetailerInventory - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
-		} catch (PersistenceException error) {
-			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
-			throw new RetailerException(
-					"deleteItemInRetailerInventory - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
+			throw new RetailerInventoryException("deleteItemInRetailerInventory - " + ExceptionConstants.FAILURE_COMMIT_CHANGES);
 		} finally {
 			session.close();
 		}

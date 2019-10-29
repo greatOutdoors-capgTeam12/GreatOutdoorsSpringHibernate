@@ -1,13 +1,12 @@
 package com.capgemini.go.zpl;
 
-import java.net.ConnectException;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import com.capgemini.go.dao.RetailerInventoryDao;
 import com.capgemini.go.dao.RetailerInventoryDaoImpl;
 import com.capgemini.go.dto.RetailerInventoryDTO;
-import com.capgemini.go.exception.RetailerException;
+import com.capgemini.go.exception.RetailerInventoryException;
 
 public class RetailerInventoryTest {
 
@@ -16,7 +15,7 @@ public class RetailerInventoryTest {
 		RetailerInventoryDTO argument = new RetailerInventoryDTO();
 		argument.setRetailerId("ret05");
 		argument.setProductCategory((byte) 5);
-		argument.setProductUniqueId("cat5uid0990");
+		argument.setProductUniqueId("cat6uid0990");
 		argument.setProductDispatchTimestamp(Calendar.getInstance(TimeZone.getTimeZone("UTC")));
 		
 		RetailerInventoryDTO argument2 = new RetailerInventoryDTO();
@@ -32,11 +31,12 @@ public class RetailerInventoryTest {
 		argument3.setProductSaleTimestamp(d);
 		
 		try {
+			//System.out.println(retailer.insertItemInRetailerInventory(argument));
 			System.out.println(retailer.deleteItemInRetailerInventory(argument));
-			System.out.println(retailer.insertItemInRetailerInventory(argument));
-			System.out.println(retailer.updateProductReceiveTimeStamp(argument2));
-			System.out.println(retailer.updateProductSaleTimeStamp(argument3));
-		} catch (ConnectException | RetailerException e) {
+			//System.out.println(retailer.insertItemInRetailerInventory(argument));
+			//System.out.println(retailer.updateProductReceiveTimeStamp(argument2));
+			//System.out.println(retailer.updateProductSaleTimeStamp(argument3));
+		} catch (RetailerInventoryException e) {
 			System.out.println(e.getMessage());
 		}
 	}

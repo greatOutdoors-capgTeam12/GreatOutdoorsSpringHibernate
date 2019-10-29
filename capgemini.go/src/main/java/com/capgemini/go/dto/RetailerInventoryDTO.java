@@ -128,4 +128,10 @@ public class RetailerInventoryDTO {
 				+ calendarToString(this.productDispatchTimestamp) + temp + "]";
 		return result;
 	}
+	
+	public boolean equals (RetailerInventoryDTO object) {
+		boolean equal = false;
+		
+		return equal;
+	}
 }

@@ -1,11 +1,11 @@
 package com.capgemini.go.service;
 
-import java.net.ConnectException;
+
 import java.util.Calendar;
 import java.util.List;
 
 import com.capgemini.go.bean.RetailerInventoryBean;
-import com.capgemini.go.exception.RetailerException;
+import com.capgemini.go.exception.RetailerInventoryException;
 
 public interface RetailerInventoryService {
 	// Shelf Time Report and Delivery Time Report
@@ -26,7 +26,7 @@ public interface RetailerInventoryService {
 	 * periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryBean> getShelfTimeReport(ReportType reportType, String retailerId,
-			Calendar dateSelection) throws RetailerException, ConnectException;
+			Calendar dateSelection) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getDeliveryTimeReport - Input Parameters : ReportType
@@ -36,13 +36,13 @@ public interface RetailerInventoryService {
 	 * periods
 	 ********************************************************************************************************/
 	public List<RetailerInventoryBean> getDeliveryTimeReport(ReportType reportType, String retailerId,
-			int productCategory) throws RetailerException, ConnectException;
+			int productCategory) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
 	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
 	 * 21/9/2019 - Description : to get List of all retailers in database
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerException, ConnectException;
+	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerInventoryException;
 	// end of Shelf Time Report and Delivery Time Report
 }
