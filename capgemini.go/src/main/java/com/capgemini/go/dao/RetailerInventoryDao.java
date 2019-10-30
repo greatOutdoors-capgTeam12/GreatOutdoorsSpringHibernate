@@ -1,6 +1,5 @@
 package com.capgemini.go.dao;
 
-import java.net.ConnectException;
 import java.util.List;
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.RetailerInventoryException;
@@ -66,8 +65,6 @@ public interface RetailerInventoryDao {
 	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
 	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
 	 * 21/9/2019 - Description : to get List of all retailers in database
-	 * 
-	 * @throws ConnectException
 	 ********************************************************************************************************/
 	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException;
 	// end of Shelf Time Report and Delivery Time Report
@@ -77,9 +74,6 @@ public interface RetailerInventoryDao {
 	 * Function Name : updateProductReceiveTimeStamp Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 21/9/2019 Description : to update receive timestamp of the product
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
@@ -87,9 +81,6 @@ public interface RetailerInventoryDao {
 	 * Function Name : updateProductSaleTimeStamp Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 21/9/2019 Description : to update sale timestamp of the product
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
@@ -97,9 +88,6 @@ public interface RetailerInventoryDao {
 	 * Function Name : insertItemInRetailerInventory Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 21/9/2019 Description : to insert a product into the inventory
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
@@ -107,9 +95,6 @@ public interface RetailerInventoryDao {
 	 * Function Name : deleteItemInRetailerInventory Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
 	 * 29/9/2019 Description : to delete a product into the inventory
-	 * 
-	 * @throws ConnectException
-	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 	// end of Functions for Retailer Inventory Manipulation
