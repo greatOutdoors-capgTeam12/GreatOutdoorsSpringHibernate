@@ -264,6 +264,8 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductCategory((byte) queryArguments.getProductCategory());
 		newItem.setProductUniqueId(queryArguments.getProductUniqueId());
 		newItem.setProductDispatchTimestamp(queryArguments.getProductDispatchTimestamp());
+		newItem.setProductReceiveTimestamp(queryArguments.getProductReceiveTimestamp());
+		newItem.setProductSaleTimestamp(queryArguments.getProductSaleTimestamp());
 
 		Transaction transaction = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
