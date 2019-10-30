@@ -2,13 +2,8 @@ package com.capgemini.go.dao;
 
 import java.net.ConnectException;
 import java.util.List;
-
-
-import com.capgemini.go.exception.RetailerException;
-
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.RetailerInventoryException;
-
 
 public interface RetailerInventoryDao {
 	// Shelf Time Report and Delivery Time Report
@@ -86,8 +81,7 @@ public interface RetailerInventoryDao {
 	 * @throws ConnectException
 	 * @throws RetailerException
 	 ********************************************************************************************************/
-	boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments)
-			throws RetailerInventoryException;
+	boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : updateProductSaleTimeStamp Input Parameters :
@@ -107,8 +101,7 @@ public interface RetailerInventoryDao {
 	 * @throws ConnectException
 	 * @throws RetailerException
 	 ********************************************************************************************************/
-	boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerInventoryException;
+	boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : deleteItemInRetailerInventory Input Parameters :
@@ -118,7 +111,6 @@ public interface RetailerInventoryDao {
 	 * @throws ConnectException
 	 * @throws RetailerException
 	 ********************************************************************************************************/
-	boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerInventoryException;
+	boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 	// end of Functions for Retailer Inventory Manipulation
 }

@@ -12,9 +12,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 @Entity
-@NamedQueries({@NamedQuery(name = "ProductEntity.getAllProducts", query = "FROM ProductEntity prod WHERE prod.quantity >= 0 ORDER BY prod.productName") })
 @Table(name = "PRODUCT")
-@Component
 public class ProductDTO implements Serializable {
 	/**
 	 * 
