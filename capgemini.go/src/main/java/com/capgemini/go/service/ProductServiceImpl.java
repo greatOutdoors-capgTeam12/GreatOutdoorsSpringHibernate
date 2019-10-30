@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.go.dao.ProductDao;
+import com.capgemini.go.dao.ProductDaoImpl;
 import com.capgemini.go.dto.ProductDTO;
 import com.capgemini.go.exception.ProductException;
 
@@ -33,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	public List<ProductDTO> viewAllProducts() throws ProductException {
 
+		ProductDao productDao = new ProductDaoImpl();
 		return productDao.viewAllProducts();
 	}
 

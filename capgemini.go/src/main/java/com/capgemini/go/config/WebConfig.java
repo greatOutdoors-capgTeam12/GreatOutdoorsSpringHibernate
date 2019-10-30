@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.capgemini.go.controller"})
+@ComponentScan(basePackages = {"com.capgemini.go.*"})
 public class WebConfig {
 
 	

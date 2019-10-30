@@ -14,7 +14,7 @@ import com.capgemini.go.dto.ProductDTO;
 import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.ProductException;
 
-@Repository(value = "productDao")
+@Repository
 public class ProductDaoImpl implements ProductDao {
 
 	// this class is wired with the sessionFactory to do some operation in the

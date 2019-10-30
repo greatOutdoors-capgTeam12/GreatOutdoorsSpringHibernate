@@ -5,14 +5,14 @@
 <web-app>
   <display-name>GreatOutdoors Web Application</display-name>
   
-  <context-param>
+  <!-- context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/BeansLocation.xml,
 			/WEB-INF/DataSource.xml,
 			/WEB-INF/Hibernate.xml
 		</param-value>
-	</context-param>
+	</context-param -->
 </web-app>
 
 

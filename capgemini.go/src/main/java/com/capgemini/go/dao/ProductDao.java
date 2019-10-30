@@ -2,10 +2,12 @@ package com.capgemini.go.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.capgemini.go.dto.ProductDTO;
 import com.capgemini.go.exception.ProductException;
 
-
+@Component
 public interface ProductDao {
 
 	// ------------------------ GreatOutdoor Application --------------------------

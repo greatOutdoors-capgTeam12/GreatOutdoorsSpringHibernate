@@ -2,6 +2,7 @@ package com.capgemini.go.config;
 
 import java.util.Properties;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +18,7 @@ import static org.hibernate.cfg.Environment.*;
 @Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
-@ComponentScans(value = { @ComponentScan("com.capgemini.go.dao"), @ComponentScan("com.capgemini.go.service") })
+@ComponentScans(value = { @ComponentScan("com.capgemini.go.*")})
 public class AppConfig {
 
 	@Autowired
@@ -25,7 +26,7 @@ public class AppConfig {
 
 	/* Creating a session factory */
 	@Bean
-	public LocalSessionFactoryBean getSessionFactory() {
+	public SessionFactory getSessionFactory() {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 		Properties properties = new Properties();
 
@@ -50,16 +51,17 @@ public class AppConfig {
 
 		factoryBean.setHibernateProperties(properties);
 		/* Scanning all the annotated classes */
-		factoryBean.setPackagesToScan("com.capgemini.go.dto");
+		factoryBean.setPackagesToScan("com.capgemini.go.*");
 
-		return factoryBean;
+		return factoryBean.getObject();
 	}
 
 	/* Creating a transaction manneger */
+
 	@Bean
 	public HibernateTransactionManager getTransactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(getSessionFactory().getObject());
+		transactionManager.setSessionFactory(getSessionFactory());
 		return transactionManager;
 	}
 
