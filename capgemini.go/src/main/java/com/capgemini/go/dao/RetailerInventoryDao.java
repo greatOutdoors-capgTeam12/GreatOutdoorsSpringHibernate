@@ -3,8 +3,6 @@ package com.capgemini.go.dao;
 import java.net.ConnectException;
 import java.util.List;
 
-import com.capgemini.go.bean.RetailerInventoryBean;
-import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.RetailerException;
 
 public interface RetailerInventoryDao {
