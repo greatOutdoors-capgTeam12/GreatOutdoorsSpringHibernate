@@ -3,7 +3,12 @@ package com.capgemini.go.dao;
 import java.net.ConnectException;
 import java.util.List;
 
+
 import com.capgemini.go.exception.RetailerException;
+
+import com.capgemini.go.dto.RetailerInventoryDTO;
+import com.capgemini.go.exception.RetailerInventoryException;
+
 
 public interface RetailerInventoryDao {
 	// Shelf Time Report and Delivery Time Report
@@ -13,8 +18,8 @@ public interface RetailerInventoryDao {
 	 * Author : Vikas - Creation Date : 21/9/2019 - Description : to get List of all
 	 * products and their Monthly Shelf time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getMonthlyShelfTime(RetailerInventoryDTO queryArguments) 
-			throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getMonthlyShelfTime(RetailerInventoryDTO queryArguments)
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getQuarterlyTimeReport - Input Parameters
@@ -22,8 +27,8 @@ public interface RetailerInventoryDao {
 	 * - Throws : N/A - Author : Vikas - Creation Date : 21/9/2019 - Description :
 	 * to get List of all products and their Quarterly Shelf time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getQuarterlyShelfTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getQuarterlyShelfTime(RetailerInventoryDTO queryArguments)
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getYearlyTimeReport - Input Parameters : RetailerInventory
@@ -31,38 +36,36 @@ public interface RetailerInventoryDao {
 	 * Author : Vikas - Creation Date : 21/9/2019 - Description : to get List of all
 	 * products and their Yearly Shelf time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getYearlyShelfTime(RetailerInventoryDTO queryArguments) 
-			throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getYearlyShelfTime(RetailerInventoryDTO queryArguments)
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierProductCategoryDeliveryTime - Input Parameters
 	 * :RetailerInventory queryArguments - Return Type : List<RetailerInventoryBean>
-	 * - Throws : N/A - Author : Kunal - Creation Date : 21/9/2019 - Description :
+	 * - Throws : N/A - Author : Sujit - Creation Date : 21/9/2019 - Description :
 	 * to get List of all product categories and their Delivery time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getOutlierProductCategoryDeliveryTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getOutlierProductCategoryDeliveryTime(RetailerInventoryDTO queryArguments)
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierItemDeliveryTime - Input Parameters :
 	 * RetailerInventory queryArguments - Return Type : List<RetailerInventoryBean>
-	 * - Throws : N/A - Author : Kunal - Creation Date : 21/9/2019 - Description :
+	 * - Throws : N/A - Author : Sujit - Creation Date : 21/9/2019 - Description :
 	 * to get List of all products and their Delivery time periods
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getOutlierItemDeliveryTime(RetailerInventoryDTO queryArguments)
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getOutlierItemInOutlierProductCategoryDeliveryTime - Input
 	 * Parameters : RetailerInventory queryArguments - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
+	 * List<RetailerInventoryBean> - Throws : N/A - Author : Sujit - Creation Date :
 	 * 21/9/2019 - Description : to get List of all products in outlier categories
 	 * and their Delivery time periods
-	 * 
-	 * @throws ConnectException
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getOutlierItemInOutlierProductCategoryDeliveryTime(
-			RetailerInventoryDTO queryArguments) throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getOutlierItemInOutlierProductCategoryDeliveryTime(
+			RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
@@ -71,9 +74,9 @@ public interface RetailerInventoryDao {
 	 * 
 	 * @throws ConnectException
 	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerException, ConnectException;
+	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException;
 	// end of Shelf Time Report and Delivery Time Report
-	
+
 	// Functions for Retailer Inventory Manipulation
 	/*******************************************************************************************************
 	 * Function Name : updateProductReceiveTimeStamp Input Parameters :
@@ -84,7 +87,7 @@ public interface RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : updateProductSaleTimeStamp Input Parameters :
@@ -94,8 +97,7 @@ public interface RetailerInventoryDao {
 	 * @throws ConnectException
 	 * @throws RetailerException
 	 ********************************************************************************************************/
-	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) 
-			throws RetailerException, ConnectException;
+	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : insertItemInRetailerInventory Input Parameters :
@@ -106,7 +108,7 @@ public interface RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
 	 * Function Name : deleteItemInRetailerInventory Input Parameters :
@@ -117,6 +119,6 @@ public interface RetailerInventoryDao {
 	 * @throws RetailerException
 	 ********************************************************************************************************/
 	boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments)
-			throws RetailerException, ConnectException;
+			throws RetailerInventoryException;
 	// end of Functions for Retailer Inventory Manipulation
 }
