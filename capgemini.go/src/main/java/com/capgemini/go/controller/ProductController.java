@@ -50,10 +50,8 @@ public class ProductController {
 	public String getAllProducts() throws ProductException  {
 	
 		List<ProductDTO> products = productService.viewAllProducts();
-		JsonObject responseDetailsJson = new JsonObject();
 	    JsonArray productList = new JsonArray();
-	    Response response = null;
-		ResponseBuilder rb = null;
+	   
 		
 	    for(ProductDTO prod : products) {
 	        JsonObject  productObj = new JsonObject();
@@ -70,11 +68,6 @@ public class ProductController {
 			productObj.addProperty("photoPath", "assets/images/products/" + prod.getProductId() + ".jpg");
 			productList.add(productObj);
 	    }
-	   // responseDetailsJson.add("products", productList);
-	    rb = Response.status(Status.OK);
-		rb.header("Access-Control-Allow-Origin", "*");
-		rb.entity(productList.toString());
-		response = rb.build();
 	
 		return productList.toString();
 	}
