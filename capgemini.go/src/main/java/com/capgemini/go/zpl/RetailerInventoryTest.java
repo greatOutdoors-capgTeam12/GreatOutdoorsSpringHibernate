@@ -43,9 +43,9 @@ public class RetailerInventoryTest {
 //		}
 		
 		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO();
-		queryArguments.setRetailerId("rt01");
+		queryArguments.setRetailerId("ret1");
 		try {
-			List<RetailerInventoryDTO> result = retailer.getListOfRetailers();
+			List<RetailerInventoryDTO> result = retailer.getItemListByRetailer(queryArguments);
 			for (int index = 0; index < result.size(); index++)
 				System.out.println(result.get(index));
 		} catch (RetailerInventoryException e) {
