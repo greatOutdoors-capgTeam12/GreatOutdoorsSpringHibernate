@@ -11,6 +11,11 @@ import com.capgemini.go.exception.RetailerInventoryException;
 
 public class DummyDataGenerator {
 	
+	/**
+	 * This function is only to be used to populate the retailer inventory table with dummy data.
+	 * It does not check to see if the table exists or not, nor does it delete existing data.
+	 * It inserts @numOfSamples number of new entities in the table.
+	 */
 	public static void initializeRetailerInventory (int numOfSamples) {
 		int numberOfSamples = numOfSamples;
 		

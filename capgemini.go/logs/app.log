@@ -1,1 +1,2 @@
 2019-10-31 10:11:16,352 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.exception.SQLGrammarException: could not extract ResultSet
+2019-10-31 10:37:16,146 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] The requested data was not found
