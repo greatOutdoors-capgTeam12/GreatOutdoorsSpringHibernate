@@ -53,7 +53,7 @@ public class RetailerInventoryTest {
 	
 	public static void main (String [] args) {
 		RetailerInventoryDao retailer = new RetailerInventoryDaoImpl ();
-		RetailerInventoryDTO argument = new RetailerInventoryDTO();
+//		RetailerInventoryDTO argument = new RetailerInventoryDTO();
 //		argument.setRetailerId("ret05");
 //		argument.setProductCategory((byte) 5);
 //		argument.setProductUniqueId("cat6uid0990");
@@ -82,7 +82,7 @@ public class RetailerInventoryTest {
 //		}
 		
 		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO();
-		queryArguments.setRetailerId("ret1");
+		queryArguments.setRetailerId("rt1");
 		try {
 			List<RetailerInventoryDTO> result = retailer.getItemListByRetailer(queryArguments);
 			for (int index = 0; index < result.size(); index++)
