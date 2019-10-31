@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,15 +16,15 @@ import com.capgemini.go.dto.ProductDTO;
 import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.ProductException;
 
-@Repository
+@Repository(value = "productDao")
 public class ProductDaoImpl implements ProductDao {
 
 	// this class is wired with the sessionFactory to do some operation in the
 	// database
 
-	@Autowired
+	
+	@Autowired	
 	private SessionFactory sessionFactory;
-
 	// this will create one sessionFactory for this class
 	// there is only one sessionFactory should be created for the applications
 	// we can create multiple sessions for a sessionFactory
@@ -33,6 +35,7 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
+		System.out.println("Setting Session Factory - " + sessionFactory);
 		this.sessionFactory = sessionFactory;
 	}
 
@@ -51,20 +54,21 @@ public class ProductDaoImpl implements ProductDao {
 		List<ProductDTO> allProducts = null;
 		Session session = null;
 		CriteriaBuilder criteriaBuilder = null;
+		Transaction transaction = null;
 		try {
-			session = sessionFactory.openSession();
+			session = getSessionFactory().openSession();
 			criteriaBuilder = session.getCriteriaBuilder();
 			CriteriaQuery<ProductDTO> criteriaQuery = criteriaBuilder.createQuery(ProductDTO.class);
-			criteriaQuery.from(ProductDTO.class);
-//			criteriaQuery.where(criteriaBuilder.greaterThanOrEqualTo(product.get("quantity"), 0)) ;
-//			criteriaQuery.orderBy(criteriaBuilder.asc(product.get("productName")));
+			Root<ProductDTO> product =  criteriaQuery.from(ProductDTO.class);
+			criteriaQuery.where(criteriaBuilder.greaterThanOrEqualTo(product.get("quantity"), 0)) ;
+			criteriaQuery.orderBy(criteriaBuilder.asc(product.get("productName")));
 			allProducts = session.createQuery(criteriaQuery).getResultList();
 
 		} catch (Exception exp) {
+			exp.printStackTrace();
 			throw new ProductException(ExceptionConstants.VIEW_PRODUCT_ERROR + exp.getMessage());
 
 		} finally {
-			session.flush();
 			session.close();
 		}
 		return allProducts;

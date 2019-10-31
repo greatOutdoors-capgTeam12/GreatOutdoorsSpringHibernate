@@ -10,9 +10,9 @@ import com.capgemini.go.dao.ProductDaoImpl;
 import com.capgemini.go.dto.ProductDTO;
 import com.capgemini.go.exception.ProductException;
 
-@Service(value="productService")
+@Service(value = "productService")
 public class ProductServiceImpl implements ProductService {
-	
+
 	@Autowired
 	private ProductDao productDao;
 
@@ -31,10 +31,9 @@ public class ProductServiceImpl implements ProductService {
 	 * Creation Date : 21/9/2019 - Description : to get all the product from the
 	 * database
 	 ********************************************************************************************************/
-	
-	public List<ProductDTO> viewAllProducts() throws ProductException {
 
-		ProductDao productDao = new ProductDaoImpl();
+	public List<ProductDTO> viewAllProducts() throws ProductException {
+		
 		return productDao.viewAllProducts();
 	}
 
