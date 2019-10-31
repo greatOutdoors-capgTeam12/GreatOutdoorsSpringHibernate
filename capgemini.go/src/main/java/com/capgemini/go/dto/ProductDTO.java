@@ -136,4 +136,11 @@ public class ProductDTO implements Serializable {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductDTO [productId=" + productId + ", price=" + price + ", colour=" + colour + ", manufacturer="
+				+ manufacturer + ", productName=" + productName + "]";
+	}
+	
 }

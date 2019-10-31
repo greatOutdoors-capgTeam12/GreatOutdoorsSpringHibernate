@@ -35,7 +35,6 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		System.out.println("Setting Session Factory - " + sessionFactory);
 		this.sessionFactory = sessionFactory;
 	}
 
