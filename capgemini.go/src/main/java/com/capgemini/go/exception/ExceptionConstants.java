@@ -11,6 +11,7 @@ public class ExceptionConstants {
 	public static final String PRODUCT_ALREADY_PRESENT_IN_INVENTORY = "Item already present in inventory";
 	public static final String INAPPROPRIATE_ARGUMENT_PASSED = "Illegal arguments passed";
 	public static final String NO_DATA_FOUND = "The requested data was not found";
+	public static final String PERSISTENCE_ERROR = "Persistence error occurred";
 	// END OF RETAILER INVENTORY EXCEPTION CONSTANTS
 }
 

@@ -83,9 +83,9 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<RetailerInventoryDTO> criteriaQuery = builder.createQuery(RetailerInventoryDTO.class);
-			Root<RetailerInventoryDTO> retialerInventory = criteriaQuery.from(RetailerInventoryDTO.class);
-			criteriaQuery.select(retialerInventory);
-			criteriaQuery.where(builder.equal(retialerInventory.get("retailerId"), queryArguments.getRetailerId()));
+			Root<RetailerInventoryDTO> retailerInventory = criteriaQuery.from(RetailerInventoryDTO.class);
+			criteriaQuery.select(retailerInventory);
+			criteriaQuery.where(builder.equal(retailerInventory.get("retailerId"), queryArguments.getRetailerId()));
 			// select * from RETAILER_INVENTORY where RETAILER_ID = ?
 			//Query<RetailerInventoryDTO> q = session.createQuery(criteriaQuery);
 			result = session.createQuery(criteriaQuery).getResultList(); // q.getResultList();
@@ -118,19 +118,80 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/*******************************************************************************************************
-	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all retailers in database
-	 ********************************************************************************************************/
-	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	// end of Shelf Time Report and Delivery Time Report
 
 	// Functions for Retailer Inventory Manipulation
+	/*******************************************************************************************************
+	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
+	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
+	 * 21/9/2019 - Description : to get item List of all retailers in database
+	 ********************************************************************************************************/
+	public List<RetailerInventoryDTO> getItemListByRetailer(RetailerInventoryDTO queryArguments) throws RetailerInventoryException {
+		List<RetailerInventoryDTO> result = null;
+		Transaction transaction = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			transaction = session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<RetailerInventoryDTO> criteriaQuery = builder.createQuery(RetailerInventoryDTO.class);
+			Root<RetailerInventoryDTO> retailerInventory = criteriaQuery.from(RetailerInventoryDTO.class);
+			criteriaQuery.select(retailerInventory);
+			criteriaQuery.where(builder.equal(retailerInventory.get("retailerId"), queryArguments.getRetailerId()));
+			result = session.createQuery(criteriaQuery).getResultList();
+			transaction.commit();
+		} catch (IllegalStateException error) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException("getItemListByRetailer - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
+		} catch (IllegalArgumentException error) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException("getItemListByRetailer - " + ExceptionConstants.INAPPROPRIATE_ARGUMENT_PASSED);
+		} finally {
+			session.close();
+		}
+		if (result == null || result.size() == 0) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(ExceptionConstants.NO_DATA_FOUND);
+			throw new RetailerInventoryException("getItemListByRetailer - " + ExceptionConstants.NO_DATA_FOUND);
+		}
+		return result;
+	}
+	
+	/*******************************************************************************************************
+	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
+	 * List<RetailerInventoryDTO> - Throws : N/A - Author : Kunal - Creation Date :
+	 * 21/9/2019 - Description : to get List of all retailers in database
+	 ********************************************************************************************************/
+	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException{
+		List<RetailerInventoryDTO> result = null;
+		Transaction transaction = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			transaction = session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<RetailerInventoryDTO> criteriaQuery = builder.createQuery(RetailerInventoryDTO.class);
+			Root<RetailerInventoryDTO> retailerInventory = criteriaQuery.from(RetailerInventoryDTO.class);
+			criteriaQuery.select(retailerInventory.get("retailerId"));
+			criteriaQuery.groupBy(retailerInventory.get("retailerId"));
+			result = session.createQuery(criteriaQuery).getResultList();
+			transaction.commit();
+		} catch (IllegalStateException error) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException("getListOfRetailers - " + ExceptionConstants.INAPPROPRIATE_METHOD_INVOCATION);
+		} catch (IllegalArgumentException error) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException("getListOfRetailers - " + ExceptionConstants.INAPPROPRIATE_ARGUMENT_PASSED);
+		} catch (PersistenceException error) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException("getListOfRetailers - " + ExceptionConstants.PERSISTENCE_ERROR);
+		} finally {
+			session.close();
+		}
+		if (result == null || result.size() == 0) {
+			GoLog.getLogger(RetailerInventoryDaoImpl.class).error(ExceptionConstants.NO_DATA_FOUND);
+			throw new RetailerInventoryException("getListOfRetailers - " + ExceptionConstants.NO_DATA_FOUND);
+		}
+		return result;
+	}
+	
 	/*******************************************************************************************************
 	 * Function Name : updateProductReceiveTimeStamp Input Parameters :
 	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
