@@ -9,15 +9,33 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.RetailerInventoryException;
 import com.capgemini.go.utility.GoLog;
-import com.capgemini.go.utility.HibernateUtil;
 
+@Repository(value = "retailerInventoryDao")
 public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
+	@Autowired	
+	private SessionFactory sessionFactory;
+	// this will create one sessionFactory for this class
+	// there is only one sessionFactory should be created for the applications
+	// we can create multiple sessions for a sessionFactory
+	// each session can do some functions
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	// Functions for Retailer Inventory Manipulation
 	/*******************************************************************************************************
 	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
@@ -28,7 +46,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			throws RetailerInventoryException {
 		List<RetailerInventoryDTO> result = null;
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -64,7 +82,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException {
 		List<RetailerInventoryDTO> result = null;
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -114,7 +132,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductReceiveTimestamp(queryArguments.getProductReceiveTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			List<RetailerInventoryDTO> itemList = session
@@ -170,7 +188,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductSaleTimestamp(queryArguments.getProductSaleTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			List<RetailerInventoryDTO> itemList = session
@@ -235,7 +253,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductSaleTimestamp(queryArguments.getProductSaleTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			session.save(newItem);
@@ -283,7 +301,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductDispatchTimestamp(queryArguments.getProductDispatchTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			session.remove(newItem);
@@ -321,7 +339,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		 */
 		List<RetailerInventoryDTO> result = null; // List reference variable for query result
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -367,7 +385,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		 */
 		List<RetailerInventoryDTO> result = null; // List reference variable for query result
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
