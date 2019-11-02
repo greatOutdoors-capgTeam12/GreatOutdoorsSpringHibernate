@@ -7,11 +7,10 @@ import com.capgemini.go.exception.RetailerInventoryException;
 public interface RetailerInventoryDao {
 	// Retailer Inventory Data Access Functions
 	/*******************************************************************************************************
-	 * - Function Name : getSoldItemsDetails - Input Parameters : RetailerInventory
-	 * queryArguments - Author : - Description : to get List of all Sold Items By
-	 * retailer ID
+	 * - Function Name : getSoldItemsDetails <br>
+	 * - Description : to get List of all Sold Items By retailer ID <br>
 	 * 
-	 * @param queryArguments
+	 * @param queryArguments (retailerId)
 	 * @return List<RetailerInventoryDTO>
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
@@ -19,12 +18,11 @@ public interface RetailerInventoryDao {
 			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * - Function Name : getDeliveredItemsDetails - Input Parameters :
-	 * RetailerInventory queryArguments - Author : - Description : to get List of
-	 * all Sold Items By retailer ID
+	 * - Function Name : getDeliveredItemsDetails <br>
+	 * - Description : to get List of all Items Delivered to retailer ID <br>
 	 * 
-	 * @param queryArguments
-	 * @return
+	 * @param queryArguments (retailerId)
+	 * @return List<RetailerInventoryDTO>
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
 	public List<RetailerInventoryDTO> getDeliveredItemsDetails(RetailerInventoryDTO queryArguments)
@@ -33,47 +31,63 @@ public interface RetailerInventoryDao {
 
 	// Functions for Retailer Inventory Manipulation
 	/*******************************************************************************************************
-	 * - Function Name : getItemListByRetailer - Input Parameters :
-	 * RetailerInventoryDTO queryArguments - Return Type :
-	 * List<RetailerInventoryDTO> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all retailers in database
-	 ********************************************************************************************************/
+	 * - Function Name : getItemListByRetailer <br>
+	 * - Description : to get List of all Items by retailer ID <br>
+	 * 
+	 * @param queryArguments (retailerId)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryDTO> getItemListByRetailer(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
-	 * List<RetailerInventoryDTO> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all retailers in database
-	 ********************************************************************************************************/
+	 * - Function Name : getListOfRetailers <br>
+	 * - Description : to get List of all Retailer ID's in database <br>
+	 * 
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * Function Name : updateProductReceiveTimeStamp Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 21/9/2019 Description : to update receive timestamp of the product
-	 ********************************************************************************************************/
+	 * - Function Name : updateProductReceiveTimeStamp <br>
+	 * - Description : to update receive time stamp of a particular product for a particular retailer <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin, productRecieveTime)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * Function Name : updateProductSaleTimeStamp Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 21/9/2019 Description : to update sale timestamp of the product
-	 ********************************************************************************************************/
+	 * - Function Name : updateProductSaleTimeStamp <br>
+	 * - Description : to update sale time stamp of a particular product for a particular retailer <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin, productSaleTime)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * Function Name : insertItemInRetailerInventory Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 21/9/2019 Description : to insert a product into the inventory
-	 ********************************************************************************************************/
+	 * - Function Name : insertItemInRetailerInventory <br>
+	 * - Description : to insert an item into inventory <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin, productCategory, productDispatchTime)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * Function Name : deleteItemInRetailerInventory Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 29/9/2019 Description : to delete a product into the inventory
-	 ********************************************************************************************************/
+	 * - Function Name : deleteItemInRetailerInventory <br>
+	 * - Description : to delete an item in inventory <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments) throws RetailerInventoryException;
 	// end of Functions for Retailer Inventory Manipulation
 }
