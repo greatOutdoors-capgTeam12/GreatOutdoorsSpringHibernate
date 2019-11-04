@@ -38,17 +38,17 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.capgemini.go.dto.CartDTO</value>
-<!-- 				<value>com.capgemini.go.dto.OrderCancelDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.OrderDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.OrderProductMapDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.ProductDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.ProductUinMapDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.RetailerInventoryDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.SalesRepDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.UserDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.ViewDetailedSalesReportByProductDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.ViewSalesReportByUserDTO</value> -->
-<!-- 				<value>com.capgemini.go.dto.WishlistDTO</value> -->
+				<value>com.capgemini.go.dto.OrderCancelDTO</value>
+				<value>com.capgemini.go.dto.OrderDTO</value>
+				<value>com.capgemini.go.dto.OrderProductMapDTO</value>
+				<value>com.capgemini.go.dto.ProductDTO</value>
+				<value>com.capgemini.go.dto.ProductUinMapDTO</value>
+				<value>com.capgemini.go.dto.RetailerInventoryDTO</value>
+				<value>com.capgemini.go.dto.SalesRepDTO</value>
+				<value>com.capgemini.go.dto.UserDTO</value>
+				<value>com.capgemini.go.dto.ViewDetailedSalesReportByProductDTO</value>
+				<value>com.capgemini.go.dto.ViewSalesReportByUserDTO</value>
+				<value>com.capgemini.go.dto.WishlistDTO</value>
 			</list>
 		</property>
 	</bean>
