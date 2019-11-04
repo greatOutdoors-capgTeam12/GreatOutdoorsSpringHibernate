@@ -1,15 +1,46 @@
 package com.capgemini.go.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.go.bean.RetailerInventoryBean;
+import com.capgemini.go.dao.RetailerInventoryDao;
+import com.capgemini.go.dao.UserDao;
+import com.capgemini.go.dto.RetailerInventoryDTO;
+import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.RetailerInventoryException;
+import com.capgemini.go.exception.UserException;
+import com.capgemini.go.utility.GoLog;
+import com.capgemini.go.utility.GoUtility;
 
 @Service (value = "retailerInventoryService")
 public class RetailerInventoryServiceImpl implements RetailerInventoryService {
+	@Autowired
+	private RetailerInventoryDao retailerInventoryDao;
+	
+	public RetailerInventoryDao getRetailerInventoryDao () {
+		return retailerInventoryDao;
+	}
+
+	public void setRetailerInventoryDao (RetailerInventoryDao retailerInventoryDao) {
+		this.retailerInventoryDao = retailerInventoryDao;
+	}
+	
+	@Autowired
+	private UserDao userDao;
+	
+	public UserDao getUserDao () {
+		return userDao;
+	}
+
+	public void setUserDao (UserDao userDao) {
+		this.userDao = userDao;
+	}
+	
 	// Shelf Time Report and Delivery Time Report
 	/*******************************************************************************************************
 	 * - Function Name : getMonthlyShelfTimeReport <br>
@@ -61,9 +92,38 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 	 * @return List<RetailerInventoryBean>
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
-	public List<RetailerInventoryBean> getItemWiseDeliveryTimeReport(String retailerId)
+	public List<RetailerInventoryBean> getItemWiseDeliveryTimeReport (String retailerId)
 			throws RetailerInventoryException {
-		return null;
+		List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
+		String retailerName = null;
+		
+		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO (retailerId, (byte)0, null, null, null, null);
+		List<RetailerInventoryDTO> listOfDeliveredItems = this.retailerInventoryDao.getDeliveredItemsDetails(queryArguments);
+				
+		try {
+			retailerName = this.userDao.fetchUser(retailerId).getUserName();
+			
+			for (RetailerInventoryDTO deliveredItem : listOfDeliveredItems) {
+				RetailerInventoryBean object = new RetailerInventoryBean ();
+				object.setRetailerId(retailerId);
+				object.setRetailerName(retailerName);
+				object.setProductCategoryNumber(deliveredItem.getProductCategory());
+				object.setProductCategoryName(GoUtility.getCategoryName(deliveredItem.getProductCategory()));
+				object.setProductUniqueId(deliveredItem.getProductUniqueId());
+				object.setDeliveryTimePeriod(GoUtility.calculatePeriod(deliveredItem.getProductDispatchTimestamp(), deliveredItem.getProductReceiveTimestamp()));
+				object.setShelfTimePeriod(null);
+				result.add(object);
+			}
+			
+		} catch (UserException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getItemWiseDeliveryTimeReport - " + ExceptionConstants.FAILED_TO_RETRIEVE_USERNAME);
+		} catch (RuntimeException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getItemWiseDeliveryTimeReport - " + ExceptionConstants.INTERNAL_RUNTIME_ERROR);
+		}
+		
+		return result;
 	}
 
 	/*******************************************************************************************************

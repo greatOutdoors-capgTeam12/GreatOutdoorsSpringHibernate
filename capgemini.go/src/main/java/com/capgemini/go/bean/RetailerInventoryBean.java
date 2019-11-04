@@ -21,7 +21,7 @@ public class RetailerInventoryBean {
 	public Period getShelfTimePeriod() {return shelfTimePeriod;}
 	
 	// Setters
-	public void setRetialerName(String retialerName) {this.retailerName = retialerName;}
+	public void setRetailerName(String retailerName) {this.retailerName = retailerName;}
 	public void setRetailerId(String retailerId) {this.retailerId = retailerId;}
 	public void setProductCategoryNumber(byte productCategoryNumber) {this.productCategoryNumber = productCategoryNumber;}
 	public void setProductCategoryName(String productCategoryName) {this.productCategoryName = productCategoryName;}

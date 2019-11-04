@@ -2,28 +2,18 @@ package com.capgemini.go.controller;
 
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.capgemini.go.dto.ProductDTO;
 import com.capgemini.go.exception.ProductException;
 import com.capgemini.go.service.ProductService;
-import com.capgemini.go.utility.GoLog;
-import com.capgemini.go.utility.InfoConstants;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import netscape.javascript.JSObject;
 
 
 
