@@ -9,11 +9,13 @@ import com.capgemini.go.dao.RetailerInventoryDao;
 import com.capgemini.go.dao.RetailerInventoryDaoImpl;
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.RetailerInventoryException;
+import com.capgemini.go.utility.HibernateUtil;
 
 public class RetailerInventoryTest {
 	
 	public static void main (String [] args) {
 		RetailerInventoryDao retailer = new RetailerInventoryDaoImpl ();
+		((RetailerInventoryDaoImpl) retailer).setSessionFactory (HibernateUtil.getSessionFactory());
 //		RetailerInventoryDTO argument = new RetailerInventoryDTO();
 //		argument.setRetailerId("ret05");
 //		argument.setProductCategory((byte) 5);

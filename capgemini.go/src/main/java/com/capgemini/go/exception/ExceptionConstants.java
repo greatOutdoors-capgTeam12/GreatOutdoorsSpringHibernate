@@ -13,5 +13,10 @@ public class ExceptionConstants {
 	public static final String NO_DATA_FOUND = "The requested data was not found";
 	public static final String PERSISTENCE_ERROR = "Persistence error occurred";
 	// END OF RETAILER INVENTORY EXCEPTION CONSTANTS
+	
+	
+	public static final String INVALID_DATE = "The given date is invalid";
+	public static final String EMPTY_DATABASE = "The database is empty";
+	
 }
 

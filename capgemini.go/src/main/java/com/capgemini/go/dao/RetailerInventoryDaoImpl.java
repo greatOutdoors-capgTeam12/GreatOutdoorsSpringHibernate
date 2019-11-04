@@ -9,26 +9,43 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.RetailerInventoryException;
 import com.capgemini.go.utility.GoLog;
-import com.capgemini.go.utility.HibernateUtil;
 
+@Repository(value = "retailerInventoryDao")
 public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
+	@Autowired	
+	private SessionFactory sessionFactory;
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	// Functions for Retailer Inventory Manipulation
 	/*******************************************************************************************************
-	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get item List of all retailers in database
-	 ********************************************************************************************************/
+	 * - Function Name : getItemListByRetailer <br>
+	 * - Description : to get List of all Items by retailer ID <br>
+	 * 
+	 * @param queryArguments (retailerId)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryDTO> getItemListByRetailer(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
 		List<RetailerInventoryDTO> result = null;
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -57,14 +74,16 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
-	 * List<RetailerInventoryDTO> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all retailers in database
-	 ********************************************************************************************************/
+	 * - Function Name : getListOfRetailers <br>
+	 * - Description : to get List of all Retailer ID's in database <br>
+	 * 
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryDTO> getListOfRetailers() throws RetailerInventoryException {
 		List<RetailerInventoryDTO> result = null;
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -96,10 +115,13 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : updateProductReceiveTimeStamp Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 21/9/2019 Description : to update receive timestamp of the product
-	 ********************************************************************************************************/
+	 * - Function Name : updateProductReceiveTimeStamp <br>
+	 * - Description : to update receive time stamp of a particular product for a particular retailer <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin, productRecieveTime)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public boolean updateProductReceiveTimeStamp(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
 		boolean receiveTimestampUpdated = false;
@@ -114,7 +136,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductReceiveTimestamp(queryArguments.getProductReceiveTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			List<RetailerInventoryDTO> itemList = session
@@ -153,10 +175,13 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : updateProductSaleTimeStamp Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 21/9/2019 Description : to update sale timestamp of the product
-	 ********************************************************************************************************/
+	 * - Function Name : updateProductSaleTimeStamp <br>
+	 * - Description : to update sale time stamp of a particular product for a particular retailer <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin, productSaleTime)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public boolean updateProductSaleTimeStamp(RetailerInventoryDTO queryArguments) throws RetailerInventoryException {
 		boolean saleTimestampUpdated = false;
 		/*
@@ -170,7 +195,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductSaleTimestamp(queryArguments.getProductSaleTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			List<RetailerInventoryDTO> itemList = session
@@ -210,10 +235,13 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : insertItemInRetailerInventory Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 21/9/2019 Description : to insert a product into the inventory
-	 ********************************************************************************************************/
+	 * - Function Name : insertItemInRetailerInventory <br>
+	 * - Description : to insert an item into inventory <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin, productCategory, productDispatchTime)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public boolean insertItemInRetailerInventory(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
 		boolean productInserted = false;
@@ -235,7 +263,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductSaleTimestamp(queryArguments.getProductSaleTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			session.save(newItem);
@@ -260,10 +288,13 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : deleteItemInRetailerInventory Input Parameters :
-	 * RetailerInventoryDTO Return Type : boolean Author : Kunal Creation Date :
-	 * 29/9/2019 Description : to delete a product into the inventory
-	 ********************************************************************************************************/
+	 * - Function Name : deleteItemInRetailerInventory <br>
+	 * - Description : to delete an item in inventory <br>
+	 * 
+	 * @param queryArguments (retailerId, productUin)
+	 * @return List<RetailerInventoryDTO>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public boolean deleteItemInRetailerInventory(RetailerInventoryDTO queryArguments)
 			throws RetailerInventoryException {
 		boolean itemDeleted = false;
@@ -283,7 +314,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		newItem.setProductDispatchTimestamp(queryArguments.getProductDispatchTimestamp());
 
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			session.remove(newItem);
@@ -305,11 +336,10 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 
 	// Retailer Inventory Data Access Functions
 	/*******************************************************************************************************
-	 * - Function Name : getSoldItemsDetails - Input Parameters : RetailerInventory
-	 * queryArguments - Author : - Description : to get List of all Sold Items By
-	 * retailer ID
+	 * - Function Name : getSoldItemsDetails <br>
+	 * - Description : to get List of all Sold Items By retailer ID <br>
 	 * 
-	 * @param queryArguments
+	 * @param queryArguments (retailerId)
 	 * @return List<RetailerInventoryDTO>
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
@@ -321,7 +351,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		 */
 		List<RetailerInventoryDTO> result = null; // List reference variable for query result
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -351,12 +381,11 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : getDeliveredItemsDetails - Input Parameters :
-	 * RetailerInventory queryArguments - Author : - Description : to get List of
-	 * all Sold Items By retailer ID
+	 * - Function Name : getDeliveredItemsDetails <br>
+	 * - Description : to get List of all Items Delivered to retailer ID <br>
 	 * 
-	 * @param queryArguments
-	 * @return
+	 * @param queryArguments (retailerId)
+	 * @return List<RetailerInventoryDTO>
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
 	@Override
@@ -367,7 +396,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 		 */
 		List<RetailerInventoryDTO> result = null; // List reference variable for query result
 		Transaction transaction = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
 			CriteriaBuilder builder = session.getCriteriaBuilder();
