@@ -13,4 +13,19 @@ public class RetailerInventoryController {
 		model.addAttribute ("message", "Hello Spring MVC Framework!");
 		return "hello";
 	}
+	
+	@RequestMapping(value = "/shelfTimeReport", method = RequestMethod.POST)
+	public String getShelfTimeReport () {
+		return null;
+	}
+	
+	@RequestMapping(value = "/deliveryTimeReport", method = RequestMethod.POST)
+	public String getDeliveryTimeReport () {
+		return null;
+	}
+	
+	@RequestMapping(value = "/retailerList", method = RequestMethod.POST)
+	public String getRetailerList () {
+		return null;
+	}
 }

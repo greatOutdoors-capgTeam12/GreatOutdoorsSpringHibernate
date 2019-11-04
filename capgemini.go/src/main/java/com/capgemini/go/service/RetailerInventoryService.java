@@ -9,70 +9,120 @@ import com.capgemini.go.exception.RetailerInventoryException;
 public interface RetailerInventoryService {
 	// Shelf Time Report and Delivery Time Report
 	/*******************************************************************************************************
-	 * - Function Name : getShelfTimeReport - Input Parameters : ReportType
-	 * reportType, String retailerId, Calendar dateSelection - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all products and their Monthly shelf
-	 * time periods
-	 ********************************************************************************************************/
+	 * - Function Name : getMonthlyShelfTimeReport <br>
+	 * - Description : to get Monthly Shelf Time Report  <br>
+	 * 
+	 * @param String retailerId
+	 * @param Calendar dateSelection
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getMonthlyShelfTimeReport(String retailerId, Calendar dateSelection)
 			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * - Function Name : getQuarterlyShelfTimeReport - Input Parameters : ReportType
-	 * reportType, String retailerId, Calendar dateSelection - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all products and their Quarterly
-	 * shelf time periods
-	 ********************************************************************************************************/
+	 * - Function Name : getQuarterlyShelfTimeReport <br>
+	 * - Description : to get Quarterly Shelf Time Report  <br>
+	 * 
+	 * @param String retailerId
+	 * @param Calendar dateSelection
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getQuarterlyShelfTimeReport(String retailerId, Calendar dateSelection)
 			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * - Function Name : getYearlyShelfTimeReport - Input Parameters : ReportType
-	 * reportType, String retailerId, Calendar dateSelection - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all products and their Yearly shelf
-	 * time periods
-	 ********************************************************************************************************/
+	 * - Function Name : getYearlyShelfTimeReport <br>
+	 * - Description : to get Yearly Shelf Time Report  <br>
+	 * 
+	 * @param String retailerId
+	 * @param Calendar dateSelection
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getYearlyShelfTimeReport(String retailerId, Calendar dateSelection)
 			throws RetailerInventoryException;
 
 	/*******************************************************************************************************
-	 * - Function Name : getItemWiseDeliveryTimeReport - Input Parameters :
-	 * ReportType reportType, String retailerId, int productCategory - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of Items and their Delivery time
-	 * periods
-	 ********************************************************************************************************/
+	 * - Function Name : getItemWiseDeliveryTimeReport <br>
+	 * - Description : to get Item wise Delivery Time Report  <br>
+	 * 
+	 * @param String retailerId
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getItemWiseDeliveryTimeReport(String retailerId)
 			throws RetailerInventoryException;
 	
 	/*******************************************************************************************************
-	 * - Function Name : getCategoryWiseDeliveryTimeReport - Input Parameters :
-	 * ReportType reportType, String retailerId, int productCategory - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of Categories and their average Delivery time
-	 * periods
-	 ********************************************************************************************************/
+	 * - Function Name : getCategoryWiseDeliveryTimeReport <br>
+	 * - Description : to get Category wise Delivery Time Report  <br>
+	 * 
+	 * @param String retailerId
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getCategoryWiseDeliveryTimeReport(String retailerId)
 			throws RetailerInventoryException;
 	
 	/*******************************************************************************************************
-	 * - Function Name : getOutlierCategoryItemWiseDeliveryTimeReport - Input Parameters :
-	 * ReportType reportType, String retailerId, int productCategory - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of Items in Outlier Categories and their Delivery time
-	 * periods
-	 ********************************************************************************************************/
+	 * - Function Name : getOutlierCategoryItemWiseDeliveryTimeReport <br>
+	 * - Description : to get Outlier Category Item wise Delivery Time Report  <br>
+	 * 
+	 * @param String retailerId
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getOutlierCategoryItemWiseDeliveryTimeReport(String retailerId)
 			throws RetailerInventoryException;
-
-	/*******************************************************************************************************
-	 * - Function Name : getListOfRetailers - Input Parameters : N/A - Return Type :
-	 * List<RetailerInventoryBean> - Throws : N/A - Author : Kunal - Creation Date :
-	 * 21/9/2019 - Description : to get List of all retailers in database
-	 ********************************************************************************************************/
-	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerInventoryException;
 	// end of Shelf Time Report and Delivery Time Report
+	
+	/*******************************************************************************************************
+	 * - Function Name : getListOfRetailers <br>
+	 * - Description : to get list of retailers in database  <br>
+	 * - This function is called by client side application to load form data
+	 * 
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
+	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerInventoryException;
+	
+	/*******************************************************************************************************
+	 * - Function Name : addItemToInventory <br>
+	 * - Description : to add an item to inventory  <br>
+	 * - This function is to be called in the Order service when Order is placed by a retailer
+	 * 
+	 * @return boolean (true: if item added | false: otherwise)
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
+	public boolean addItemToInventory (String retailerId, String productUIN) throws RetailerInventoryException;
+	
+	/*******************************************************************************************************
+	 * - Function Name : deleteItemFromInventory <br>
+	 * - Description : to delete an item from inventory  <br>
+	 * - This function is to be called if Order is canceled by a retailer
+	 * 
+	 * @return boolean (true: if item deleted | false: otherwise)
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
+	public boolean deleteItemFromInventory (String retailerId, String productUIN) throws RetailerInventoryException;
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateItemReceiveTimestamp <br>
+	 * - Description : to update receive timestamp of an item in inventory  <br>
+	 * 
+	 * @return boolean (true: if receive timestamp updated | false: otherwise)
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
+	public boolean updateItemReceiveTimestamp (String retailerId, String productUIN) throws RetailerInventoryException;
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateItemSaleTimestamp <br>
+	 * - Description : to update sale timestamp of an item in inventory  <br>
+	 * 
+	 * @return boolean (true: if sale timestamp updated | false: otherwise)
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
+	public boolean updateItemSaleTimestamp (String retailerId, String productUIN) throws RetailerInventoryException;
 }
