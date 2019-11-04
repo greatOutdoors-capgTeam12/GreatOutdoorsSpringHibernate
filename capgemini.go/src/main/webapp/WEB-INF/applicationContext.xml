@@ -46,7 +46,6 @@
 				<value>com.capgemini.go.dto.OrderProductMapDTO</value>
 				<value>com.capgemini.go.dto.ViewDetailedSalesReportByProductDTO</value>
 				<value>com.capgemini.go.dto.ViewSalesReportByUserDTO</value>
-
 			</list>
 		</property>
 
