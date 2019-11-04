@@ -47,17 +47,15 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Checking if orderId exists and also getting order details
 	 ********************************************************************************************************/
-
+    @Override
 	public String getOrderDetails(String orderId) throws Exception {
 
 		Session session = null;
-		SessionFactory sessionFactory = null;
 		String orderID = null;
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			Query query =  session.createQuery(HQLQuerryMapper.IS_ORDER_PRESENT);
 			query.setParameter("orderID", orderId);
@@ -91,17 +89,14 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Checking if userId exists
 	 ********************************************************************************************************/
-
+    @Override
 	public boolean checkSalesRepId(String userId) throws Exception {
 		Session session = null;
-		SessionFactory sessionFactory = null;
 		boolean checkSalesRepIdFlag = false;
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			session = getSessionFactory().openSession();
 			Query query = session.createQuery(HQLQuerryMapper.IS_SALES_REP_ID_PRESENT);
 			query.setParameter("userID", userId);
 			List<SalesRepDTO> userList = (List<SalesRepDTO>)query.list();
@@ -135,17 +130,15 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Check if order is dispatched
 	 ********************************************************************************************************/
-
+    @Override
 	public boolean checkDispatchStatusForCancelling(String orderId) throws Exception {
 		Session session = null;
-		SessionFactory sessionFactory = null;
 		boolean checkDispatchStatusFlag = false;
 		int index = 0;
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			Query query =  session.createNativeQuery(HQLQuerryMapper.CHECK_ORDER_DISPATCH_STATUS);
 			query.setParameter("orderID", orderId);
@@ -177,10 +170,9 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : To get a list of type OrderReturnEntity
 	 ********************************************************************************************************/
-
+    @Override
 	public List<OrderProductMapDTO> getOrderProductMapForCancelling(String orderId) throws Exception {
 		Session session = null;
-		SessionFactory sessionFactory = null;
 		OrderProductMapDTO opm = null;
 		List<OrderProductMapDTO> list = null;
 		list = new ArrayList<OrderProductMapDTO>();
@@ -188,8 +180,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			Query query =  session.createQuery(HQLQuerryMapper.GET_PRODUCT_MAP);
 			query.setParameter("orderID", orderId);
@@ -232,19 +223,16 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Adding rows to OrderCancelEntity table and updating OrderReturnEntity  after canceling the product
 	 **************************************************************************************************************/
-
+    @Override
 	public String cancelOrder(OrderCancelDTO orderCancel) throws Exception {
 		Session session = null;
-		SessionFactory sessionFactory = null;
 		Session session2 = null;
-		SessionFactory sessionFactory2 = null;
 		String cancelOrderStatus = "Order cant be cancelled";
 		int i = 0;
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			OrderCancelDTO oce = new OrderCancelDTO();
 			oce.setOrderid(orderCancel.getOrderid());
@@ -257,8 +245,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 			oce.setOrdercancelstatus(1);
 			session.save(oce);
 			session.getTransaction().commit();
-			sessionFactory2.getSessionFactory();
-			session2 = sessionFactory2.getCurrentSession();
+			session2 = getSessionFactory().openSession();
 			session2.beginTransaction();
 			Query query =  session2.createQuery(HQLQuerryMapper.UPDATE_ORDER_PRODUCT_MAP_WITH_PRODUCT_UIN);
 			query.setParameter("orderID", orderCancel.getOrderid());
@@ -291,7 +278,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Return the quantity of product ordered
 	 ********************************************************************************************************/
-
+    @Override
 	public int getProductQuantityOrdered(String orderId, String productId) throws Exception {
 		Session session = null;
 		SessionFactory sessionFactory = null;
@@ -299,8 +286,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			Query query =  session.createQuery(HQLQuerryMapper.GET_PRODUCT_QUANTITY);
 			query.setParameter("orderID", orderId);
@@ -331,7 +317,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Updating the Order_Cancel table after canceling the product
 	 ********************************************************************************************************/
-
+    @Override
 	public String cancelProduct(String orderId, String productId, int productQtyOrdered, int quantity) throws Exception {
 		Session session = null;
 		SessionFactory sessionFactory = null;
@@ -340,8 +326,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			if (productQtyOrdered == quantity) {
 				Query query =  session.createQuery(HQLQuerryMapper.UPDATE_ORDER_PRODUCT_MAP_CANCEL_PROD_EQUAL_QUANTITY);
@@ -384,29 +369,25 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Adding rows to OrderCancelEntity table after canceling the product
 	 ******************************************************************************************************************/
-
+    @Override
 	public String updateOrderCancelForProduct(String orderId, String productId, int productQtyOrdered, int quantity,
 			String userId) throws Exception {
 		String statusCancelOrderForProduct = null;
 		Session session = null;
-		SessionFactory sessionFactory = null;
 		Session session2 = null;
-		SessionFactory sessionFactory2 = null;
 		int rowsChanged = 0;
 		int index = 0;
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			if (productQtyOrdered == quantity) {
 				Query query =  session.createQuery(HQLQuerryMapper.GET_ORDER_PRODUCT_MAP_CANCEL_PROD_EQUAL_QUANTITY);
 				query.setParameter("orderID", orderId);
 				query.setParameter("productID", productId);
 				List<OrderProductMapDTO> orderProductMapEntityList = (List<OrderProductMapDTO>)query.list();
-				sessionFactory2.getSessionFactory();
-				session2 = sessionFactory2.getCurrentSession();
+				session2 = getSessionFactory().openSession();
 				while (orderProductMapEntityList.size()>index) {
 					OrderCancelDTO oce = new OrderCancelDTO();
 					oce.setOrderid(orderProductMapEntityList.get(index).getOrderId());
@@ -420,8 +401,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 					session2.save(oce);
 					session2.getTransaction().commit();
 					index++;
-					sessionFactory2.getSessionFactory();
-					session2 = sessionFactory2.getCurrentSession();
+					session2 = getSessionFactory().openSession();
 					session2.beginTransaction();
 				}
 				System.out.println("The order-cancel table's " + orderProductMapEntityList.size() + " rows has been inserted");
@@ -432,8 +412,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 				query.setFirstResult(0); 
 				query.setMaxResults(quantity);
 				List<OrderProductMapDTO> orderProductMapEntityList = (List<OrderProductMapDTO>)query.list();
-				sessionFactory2.getSessionFactory();
-				session2 = sessionFactory2.getCurrentSession();
+				session2 = getSessionFactory().openSession();
 				while (orderProductMapEntityList.size()>index) {
 					OrderCancelDTO oce = new OrderCancelDTO();
 					oce.setOrderid(orderProductMapEntityList.get(index).getOrderId());
@@ -447,8 +426,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 					session2.save(oce);
 					session2.getTransaction().commit();
 					index++;
-					sessionFactory2.getSessionFactory();
-					session2 = sessionFactory2.getCurrentSession();
+					session2 = getSessionFactory().openSession();
 					session2.beginTransaction();
 				}
 				System.out.println("The order-cancel table's " + orderProductMapEntityList.size() + " rows has been inserted");
@@ -479,12 +457,9 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Return Target Sales and Target Status for a Sales Representative
 	 ********************************************************************************************************/
-
+    @Override
 	public String getTargetSales(String userId) throws Exception {
 		Session session = null;
-		SessionFactory sessionFactory = null;
-		Session session2 = null;
-		SessionFactory sessionFactory2 = null;
 		String targetStatus = null;
 		int targetSalesStatus = 0;
 		String status = null;
@@ -492,8 +467,7 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			Query query =  session.createQuery(HQLQuerryMapper.SELECT_SALES_REP_TARGET);
 			query.setParameter("userID", userId);
@@ -536,17 +510,15 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Return Bonus offered to a Sales Representative 
 	 ********************************************************************************************************/
-
+    @Override
 	public String getBonus(String userId) throws Exception {
 		Session session = null;
-		SessionFactory sessionFactory = null;
 		Double bonus = 0.0;
 		String bonusForSales = null;
 		try {
 			//exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			//goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			Query query =  session.createQuery(HQLQuerryMapper.SELECT_SALES_REP_BONUS);
 			query.setParameter("userID", userId);

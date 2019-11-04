@@ -10,8 +10,20 @@ import com.capgemini.go.dto.OrderProductMapDTO;
 @Component
 public interface SalesRepresentativeDao {
 
+	// ------------------------ GreatOutdoor Application --------------------------
+	/*******************************************************************************************************
+	 * - Function Name : getOrderDetails(String orderId) 
+	 * - Input Parameters : orderId
+	 * - Return Type : String 
+	 * - Throws : Exception 
+	 * - Author : CAPGEMINI 
+	 * - Creation Date : 28/09/2019 
+	 * - Description : Checking if orderId exists and also getting order details
+	 ********************************************************************************************************/
 	String getOrderDetails(String orderId) throws Exception;
 
+	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
 	 * - Function Name : checkSalesRepId(String userId) 
 	 * - Input Parameters : userId 
@@ -21,10 +33,10 @@ public interface SalesRepresentativeDao {
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Checking if userId exists
 	 ********************************************************************************************************/
-
 	boolean checkSalesRepId(String userId) throws Exception;
 
-
+	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
 	 * - Function Name : checkDispatchStatusForCancelling(String orderId)
 	 * - Input Parameters : orderId 
@@ -34,10 +46,10 @@ public interface SalesRepresentativeDao {
 	 * - Creation Date : 28/09/2019 
 	 * - Description : Check if order is dispatched
 	 ********************************************************************************************************/
-
 	boolean checkDispatchStatusForCancelling(String orderId) throws Exception;
 	
 	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
 	 * - Function Name : getOrderProductMapForCancelling(String orderId)
 	 * - Input Parameters : orderId 
@@ -49,6 +61,8 @@ public interface SalesRepresentativeDao {
 	 ********************************************************************************************************/
 	List<OrderProductMapDTO> getOrderProductMapForCancelling(String orderId)  throws Exception;
 
+	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/**************************************************************************************************************
 	 * - Function Name : cancelOrder(OrderCancelEntity orderCancel)
 	 * - Input Parameters : OrderCancelEntity orderCancel 
@@ -60,6 +74,8 @@ public interface SalesRepresentativeDao {
 	 **************************************************************************************************************/
 	String cancelOrder(OrderCancelDTO oc) throws Exception;
 
+	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
 	 * - Function Name : getProductQuantityOrdered(String orderId, String productId)
 	 * - Input Parameters : orderId, productId
@@ -72,6 +88,7 @@ public interface SalesRepresentativeDao {
 	int getProductQuantityOrdered(String orderId, String productId) throws Exception;
 
 	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
 	 * - Function Name : cancelProduct(String orderId, String productId, int productQty, int quantity) 
 	 * - Input Parameters : orderId, productId, productQty, quantity 
@@ -84,6 +101,7 @@ public interface SalesRepresentativeDao {
 	String cancelProduct(String orderId, String productId, int productQtyOrdered, int quantity) throws Exception;
 
 	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************************
 	 * - Function Name : updateOrderCancelForProduct(String orderId, String productId, int productQtyOrdered, int quantity,
 			String userId) 
@@ -97,6 +115,8 @@ public interface SalesRepresentativeDao {
 	String updateOrderCancelForProduct(String orderId, String productId, int productQtyOrdered, int quantity, String userId)
 			throws Exception;
 	
+	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
 	 * - Function Name : getTargetSales(String userId)
 	 * - Input Parameters : userId
@@ -109,6 +129,7 @@ public interface SalesRepresentativeDao {
 	String getTargetSales(String userId) throws Exception;
 	
 	
+	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
 	 * - Function Name : getBonus(String userId) 
 	 * - Input Parameters : userId 
