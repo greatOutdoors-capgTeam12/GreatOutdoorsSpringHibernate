@@ -29,7 +29,7 @@ import netscape.javascript.JSObject;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4201", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/Products")
 public class ProductController {
 
@@ -45,6 +45,8 @@ public class ProductController {
 	public void setProductService(ProductService productService) {
 		this.productService = productService;
 	}
+	
+	
 	@ResponseBody
 	@GetMapping("/list")
 	public String getAllProducts() throws ProductException  {

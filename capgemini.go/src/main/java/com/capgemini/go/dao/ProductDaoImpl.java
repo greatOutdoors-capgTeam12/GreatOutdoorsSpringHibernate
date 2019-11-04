@@ -47,7 +47,7 @@ public class ProductDaoImpl implements ProductDao {
 	 * 
 	 * @throws ProductException
 	 ********************************************************************************************************/
-
+	@Override
 	public List<ProductDTO> viewAllProducts() throws ProductException {
 
 		List<ProductDTO> allProducts = null;
@@ -72,5 +72,14 @@ public class ProductDaoImpl implements ProductDao {
 		}
 		return allProducts;
 	}
+
+	@Override
+	public boolean addProduct(ProductDTO product) throws ProductException {
+		boolean addProductStatus = false;
+		
+		return addProductStatus;
+	}
+	
+	
 
 }
