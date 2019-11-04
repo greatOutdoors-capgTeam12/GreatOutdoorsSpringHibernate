@@ -18,6 +18,22 @@ public class HQLQuerryMapper {
 
 	public static final String UPDATE_ORDER_PRODUCT_MAP="UPDATE OrderProductMapDTO opm SET opm.productStatus=0 WHERE ORDER_ID=:orderId ";
 
+	public static final String USER_ID_EXISTS = "FROM UserEntity WHERE userId =:idExist";
+	public static final String USER_CATEGORY = "FROM UserEntity WHERE userCategory =:catgCorrect";
+	public static final String USER_PASSWORD_CHECK = "select userPassword FROM UserEntity WHERE userId =:correctUser";
+	public static final String CHANGE_ACTIVE_STATUS = "UPDATE UserEntity SET userActiveStatus=1 WHERE userId =:userLoggin";
+	public static final String GET_PRODUCT_QTY_FROM_DB = "from ProductEntity prod where prod.productId = :product_id";
+	public static final String CART_ITEM_QTY_FOR_PRODUCT_ID="FROM CartItemEntity cart where cart.productId =:productId AND cart.retailerId =:retailerId";
+	public static final String GET_PRODUCT_DETAILS_FROM_PRODUCT_UIN_MAP="from ProductUinMapEntity prodUinMap where prodUinMap.productUniqueIdentity.productId=: product_id AND  prodUinMap.productIsPresent=:prodispresent";
+	public static final String UPDATE_CART = "update CartItemEntity cart set cart.quantity= :quantity where cart.productId= :product_id AND cart.retailerId = :retailerId";
+	public static final String GET_CART_ITEMS_OF_RETAILER ="from CartItemEntity cart where cart.retailerId= :retailer_id";
+	public static final String UPDATE_PRODUCT_UIN_MAP="update ProductUinMapEntity prodUinMapEnt set prodUinMapEnt.productIsPresent=:0 where prodUinMap.productUniqueIdentity.productId=: product_id";
+	public static final String VALIDATE_NUMBER_EMAIL = "SELECT COUNT(*) FROM UserEntity WHERE userNumber =:existNum OR userMail =:existMail";
+	public static final String UPDATE_PRODUCT_ENTITY="update ProductEntity product set product.quantity=: product.quantity- CartItemEntity.quantity where productId=:productid";
+	public static final String DELETE_ORDER="delete OrderEntity ord where ord.orderId=:orderid";
+	public static final String DELETE_CART="delete CartItemEntity cart where cart.retailerId=:retailerid";
+
+
 	
 	
 	
