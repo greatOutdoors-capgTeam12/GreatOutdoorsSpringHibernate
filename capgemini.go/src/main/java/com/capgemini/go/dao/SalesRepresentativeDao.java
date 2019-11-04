@@ -141,4 +141,5 @@ public interface SalesRepresentativeDao {
 	 ********************************************************************************************************/
 	String getBonus(String userId) throws Exception;
 	
+	
 }

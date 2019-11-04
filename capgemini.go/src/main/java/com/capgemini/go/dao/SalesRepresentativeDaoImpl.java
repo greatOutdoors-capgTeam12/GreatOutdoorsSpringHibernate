@@ -75,8 +75,6 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 			}
 		}
 		return orderID;
-
-
 	}
 
 	// ------------------------ 1. GO Application --------------------------
@@ -116,7 +114,6 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 			}
 		}
 		return checkSalesRepIdFlag;
-
 	}
 
 
@@ -199,7 +196,6 @@ public class SalesRepresentativeDaoImpl implements SalesRepresentativeDao{
 				}
 				index++;
 			}
-
 		} catch (Exception e) {
 			//GoLog.logger.error(exceptionProps.getProperty("orderId_not_found_failure"));
 		} finally {
