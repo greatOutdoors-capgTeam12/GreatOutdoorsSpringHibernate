@@ -61,41 +61,6 @@ public class UserDaoImpl implements UserDao {
 
 	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
-	 * - Function Name : viewAllProducts - Input Parameters : - Return Type :
-	 * List<ProductDTO> - Throws : ProductException - Author : AGNIBHA CHANDRA -
-	 * Creation Date : 21/9/2019 - Description : to get all the product from the
-	 * database
-	 * 
-	 * @throws ProductException
-	 ********************************************************************************************************/
-
-	public List<ProductDTO> viewAllProducts() throws ProductException {
-
-		List<ProductDTO> allProducts = null;
-		Session session = null;
-		CriteriaBuilder criteriaBuilder = null;
-		Transaction transaction = null;
-		try {
-			session = getSessionFactory().openSession();
-			criteriaBuilder = session.getCriteriaBuilder();
-			CriteriaQuery<ProductDTO> criteriaQuery = criteriaBuilder.createQuery(ProductDTO.class);
-			Root<ProductDTO> product = criteriaQuery.from(ProductDTO.class);
-			criteriaQuery.where(criteriaBuilder.greaterThanOrEqualTo(product.get("quantity"), 0));
-			criteriaQuery.orderBy(criteriaBuilder.asc(product.get("productName")));
-			allProducts = session.createQuery(criteriaQuery).getResultList();
-
-		} catch (Exception exp) {
-			exp.printStackTrace();
-			throw new ProductException(ExceptionConstants.VIEW_PRODUCT_ERROR + exp.getMessage());
-
-		} finally {
-			session.close();
-		}
-		return allProducts;
-	}
-
-	// ------------------------ GreatOutdoor Application --------------------------
-	/*******************************************************************************************************
 	 * - Function Name : userRegistration - Input Parameters : userID, userName,
 	 * userMail, userNumber, activeStatus, password, userCategory - Return Type :
 	 * boolean - Throws :UserException - Author:AMAN - Creation Date : 21/9/2019 -
@@ -124,7 +89,7 @@ public class UserDaoImpl implements UserDao {
 			goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
 			sessionFactory = HibernateUtil.getSessionFactory();
 			session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
+			//session.beginTransaction();
 
 			if (!(userCategory == Integer.parseInt(goProps.getProperty("SALES_REP"))
 					|| userCategory == Integer.parseInt(goProps.getProperty("RETAILER")))) {
@@ -184,7 +149,7 @@ public class UserDaoImpl implements UserDao {
 			session.getTransaction().commit();
 
 		} catch (HibernateException | IOException e) {
-			session.getTransaction().rollback();
+			//session.getTransaction().rollback();
 			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("registration_failed"));
 			throw new UserException(" >>>" + e.getMessage());
 		} finally {
@@ -217,8 +182,8 @@ public class UserDaoImpl implements UserDao {
 		try {
 			exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory = HibernateUtil.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
+//			sessionFactory = HibernateUtil.getSessionFactory();
+			session = getSessionFactory().openSession();
 			session.beginTransaction();
 
 			Query validateUser = (Query) session.createQuery(HQLQuerryMapper.USER_ID_EXISTS);
@@ -251,7 +216,8 @@ public class UserDaoImpl implements UserDao {
 			session.getTransaction().commit();
 		}
 
-		catch (HibernateException | IOException e) {
+		catch (Exception e) {
+			e.printStackTrace();
 			session.getTransaction().rollback();
 			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("login_failure"));
 			throw new UserException(" >>>" + e.getMessage());

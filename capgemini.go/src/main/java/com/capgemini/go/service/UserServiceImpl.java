@@ -4,15 +4,32 @@ package com.capgemini.go.service;
 
 import java.net.ConnectException;
 import java.sql.Connection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.go.dao.ProductDao;
 import com.capgemini.go.dao.UserDao;
 import com.capgemini.go.dao.UserDaoImpl;
 import com.capgemini.go.dto.UserDTO;
 import com.capgemini.go.exception.UserException;
 
+@Service(value = "userService")
 public class UserServiceImpl implements UserService {
 
 	
-	private UserDao user = new UserDaoImpl();
+
+	@Autowired
+	private UserDao user;
+
+	public UserDao getProductDao() {
+		return user;
+	}
+
+	public void setProductDao(UserDao user) {
+		this.user = user;
+	}
+	
 
 	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
@@ -94,7 +111,6 @@ public class UserServiceImpl implements UserService {
 			 ********************************************************************************************************/
 		public UserDTO fetchUser(String userId) throws UserException
 		{
-			UserDao user = new UserDaoImpl();
 			UserDTO loggedUser = user.fetchUser(userId);
 			return loggedUser;
 		}
