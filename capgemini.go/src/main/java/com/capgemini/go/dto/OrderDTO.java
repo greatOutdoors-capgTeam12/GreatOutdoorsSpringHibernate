@@ -10,15 +10,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-
-@NamedQueries({ @NamedQuery(name = "OrderDTO.all", query = "FROM OrderDTO") })
-
-@Table(name = "`ORDER`")
-
 @Table(name = "ORDER")
-
 public class OrderDTO {
-	
+
 	@Id
 	@Column(name = "ORDER_ID", unique = false, nullable = false)
 	private String orderId;
@@ -40,7 +34,7 @@ public class OrderDTO {
 	private Date orderInitiateTime;
 
 	public OrderDTO() {
-		
+
 	}
 
 	public OrderDTO(String orderId, byte orderDispatchStatus, Date orderDispatchTime, String userId, String addressId,

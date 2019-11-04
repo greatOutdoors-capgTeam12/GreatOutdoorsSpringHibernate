@@ -3,9 +3,12 @@ package com.capgemini.go.service;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.capgemini.go.bean.RetailerInventoryBean;
 import com.capgemini.go.exception.RetailerInventoryException;
 
+@Service (value = "retailerInventoryService")
 public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 	// Shelf Time Report and Delivery Time Report
 	/*******************************************************************************************************

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Id;
 
 class CartItemUniqueKey implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +39,7 @@ class CartItemUniqueKey implements Serializable {
 @Table(name="CART_ITEM")
 public class CartDTO {
 
+	@Id
 	@Column(name= "CartItemUniqueKey", unique=true, nullable=false)
 	private CartItemUniqueKey Id;
 	
