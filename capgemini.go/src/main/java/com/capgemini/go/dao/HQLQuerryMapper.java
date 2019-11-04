@@ -5,6 +5,21 @@ public class HQLQuerryMapper {
 	public static final String GET_ALL_PRODUCTS = "FROM ProductEntity prod WHERE prod.quantity >= 0 ORDER BY prod.productName";
 	
 
+	public static final String USER_ID_EXISTS = "FROM UserEntity WHERE userId =:idExist";
+	public static final String USER_CATEGORY = "FROM UserEntity WHERE userCategory =:catgCorrect";
+	public static final String USER_PASSWORD_CHECK = "select userPassword FROM UserEntity WHERE userId =:correctUser";
+	public static final String CHANGE_ACTIVE_STATUS = "UPDATE UserEntity SET userActiveStatus=1 WHERE userId =:userLoggin";
+	
+	
+	
+	
+	
+	
+	public static final String VALIDATE_NUMBER_EMAIL = "SELECT COUNT(*) FROM UserEntity WHERE userNumber =:existNum OR userMail =:existMail";
+
+
+}
+
 
 	
 	//public static final String SELECT_DATA_FROM_DATABASE = "SELECT order.userId as ViewSalesReportByUserEntity.userId, order.orderInitiateTime as ViewSalesReportByUserEntity.date, order.orderId as ViewSalesReportByUserEntity.orderId, opm.productId as ViewSalesReportByUserEntity.productId, prod.productCategory as ViewSalesReportByUserEntity.productCategory, prod.price as ViewSalesReportByUserEntity.price FROM OrderEntity order JOIN OrderProductMapEntity opm ON order.orderId=opm.orderId JOIN ProductEntity prod ON opm.productId=prod.productId";
@@ -38,4 +53,4 @@ public class HQLQuerryMapper {
 
 	
 }
-//INNER JOIN OrderProductMapPK as opm ON order.orderId = opm.orderId 
+
