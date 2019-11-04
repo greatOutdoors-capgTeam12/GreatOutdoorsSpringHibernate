@@ -20,6 +20,7 @@ public class ExceptionConstants {
 	// ORDER AND CART EXCEPTION CONSTANTS
 	public static final String ITEM_ALREADY_PRESENT_IN_CART = "Item is already present in cart";
 	public static final String ITEM_NOT_IN_CART = "Item is not in cart";
+	public static final String ITEM_ALREADY_MAPPED_TO_ORDER = "Item is already mapped to an existing order";
 	// END OF ORDER AND CART EXCEPTION CONSTANTS
 	
 	public static final String INVALID_DATE = "The given date is invalid";

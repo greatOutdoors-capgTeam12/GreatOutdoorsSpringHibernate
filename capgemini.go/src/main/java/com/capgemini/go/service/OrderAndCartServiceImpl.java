@@ -1,7 +1,5 @@
 package com.capgemini.go.service;
 
-public class OrderAndCartServiceImpl {
-
-	
+public class OrderAndCartServiceImpl implements OrderAndCartService{
 	
 }
