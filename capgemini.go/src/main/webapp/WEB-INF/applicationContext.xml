@@ -41,10 +41,12 @@
 			<list>
 				<value>com.capgemini.go.dto.ProductDTO</value>
 				<value>com.capgemini.go.dto.RetailerInventoryDTO</value>
+				<value>com.capgemini.go.dto.UserDTO</value>
 				<value>com.capgemini.go.dto.OrderDTO</value>
 				<value>com.capgemini.go.dto.OrderProductMapDTO</value>
 				<value>com.capgemini.go.dto.ViewDetailedSalesReportByProductDTO</value>
 				<value>com.capgemini.go.dto.ViewSalesReportByUserDTO</value>
+
 			</list>
 		</property>
 
