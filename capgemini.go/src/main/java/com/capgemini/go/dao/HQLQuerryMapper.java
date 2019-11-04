@@ -3,7 +3,7 @@ package com.capgemini.go.dao;
 public class HQLQuerryMapper {
 
 
-	public static final String USER_ID_EXISTS = "FROM UserDTO WHERE userId =:idExist";
+	public static final String USER_ID_EXISTS = "from UserDTO where userId =:idExist";
 	public static final String USER_CATEGORY = "FROM UserDTO WHERE userCategory =:catgCorrect";
 	public static final String USER_PASSWORD_CHECK = "select userPassword FROM UserDTO WHERE userId =:correctUser";
 	public static final String CHANGE_ACTIVE_STATUS = "UPDATE UserDTO SET userActiveStatus=1 WHERE userId =:userLoggin";
@@ -13,7 +13,7 @@ public class HQLQuerryMapper {
 	
 	
 	
-	public static final String VALIDATE_NUMBER_EMAIL = "SELECT COUNT(*) FROM UserDTO WHERE userNumber =:existNum OR userMail =:existMail";
+	public static final String VALIDATE_NUMBER_EMAIL = "select COUNT(*) from UserDTO WHERE userNumber =:existNum OR userMail =:existMail";
 
 
 	public static final String UPDATE_ORDER_PRODUCT_MAP="UPDATE OrderProductMapDTO opm SET opm.productStatus=0 WHERE ORDER_ID=:orderId ";

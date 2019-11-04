@@ -70,7 +70,8 @@ public class UserServiceImpl implements UserService {
 		boolean userLoginStatus = false;
 		try {
 			userLoginStatus = user.userLogin(existingUser);
-		} catch (UserException e) {
+		}
+		catch (UserException e) {
 			throw new Exception (e.getMessage());
 		}
 		return userLoginStatus;

@@ -89,7 +89,7 @@ public class UserDaoImpl implements UserDao {
 			goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
 			sessionFactory = HibernateUtil.getSessionFactory();
 			session = sessionFactory.getCurrentSession();
-			//session.beginTransaction();
+			session.beginTransaction();
 
 			if (!(userCategory == Integer.parseInt(goProps.getProperty("SALES_REP"))
 					|| userCategory == Integer.parseInt(goProps.getProperty("RETAILER")))) {
@@ -175,11 +175,12 @@ public class UserDaoImpl implements UserDao {
 
 		String userId = user.getUserId();
 		String userPassword = user.getUserPassword();
-
+System.out.println("1");
 		Session session = null;
 		SessionFactory sessionFactory = null;
 
 		try {
+			System.out.println("2");
 			exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
 			goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
 //			sessionFactory = HibernateUtil.getSessionFactory();
@@ -193,9 +194,13 @@ public class UserDaoImpl implements UserDao {
 				userFound = true;
 
 				if (u.isUserActiveStatus() == false) {
-
+					System.out.println("3");
+					System.out.println(u.getUserPassword());
+					System.out.println(user.getUserPassword());
+					System.out.println(Authentication.encrypt(user.getUserPassword(), AuthenticationConstants.secretKey));
 					if (u.getUserPassword().equals(
 							Authentication.encrypt(user.getUserPassword(), AuthenticationConstants.secretKey))) {
+						System.out.println("4");
 						u.setUserActiveStatus(true);
 						userLoginStatus = true;
 
@@ -216,9 +221,9 @@ public class UserDaoImpl implements UserDao {
 			session.getTransaction().commit();
 		}
 
-		catch (Exception e) {
+		catch (HibernateException e) {
 			e.printStackTrace();
-			session.getTransaction().rollback();
+			//session.getTransaction().rollback();
 			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("login_failure"));
 			throw new UserException(" >>>" + e.getMessage());
 		} finally {
