@@ -1,2 +1,7 @@
-2019-10-31 10:11:16,352 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] org.hibernate.exception.SQLGrammarException: could not extract ResultSet
-2019-10-31 10:37:16,146 ERROR c.c.g.d.RetailerInventoryDaoImpl [main] The requested data was not found
+2019-11-05 01:07:04,812 ERROR c.c.g.u.GoUtility [main] Illegal arguments passed
+2019-11-05 01:07:45,918 ERROR c.c.g.u.GoUtility [main] calculatePeriod - Illegal arguments passed
+2019-11-05 01:14:58,650 INFO c.c.g.u.GoUtility [main] Years: 3 Months: 5 Days: 20
+2019-11-05 01:15:39,333 INFO c.c.g.u.GoUtility [main] calculatePeriod - Years: 3 Months: 5 Days: 20
+2019-11-05 01:16:12,626 INFO c.c.g.u.GoUtility [main] calculatePeriod - {Years: 3 Months: 5 Days: 20}
+2019-11-05 01:19:14,767 INFO c.c.g.u.GoUtility [main] calculatePeriod - {Years: 0 Months: 0 Days: 0}
+2019-11-05 01:19:27,181 ERROR c.c.g.u.GoUtility [main] calculatePeriod - Illegal arguments passed

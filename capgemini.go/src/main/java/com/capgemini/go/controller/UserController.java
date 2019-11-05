@@ -50,6 +50,44 @@ public class UserController {
 			result = userService.userLogin(existUser);
 			if(result)
 			{
+				((ObjectNode) dataResponse).put("Success :","User Successfully Logged In");
+				UserDTO loggedUser = userService.fetchUser(userId);
+				userFetched = mapper.writeValueAsString(loggedUser);
+				dataResponse = mapper.readTree(userFetched);
+				
+			}
+		}
+		catch(Exception exp)
+		{
+			((ObjectNode) dataResponse).put("Error :",exp.getMessage());
+		}
+		
+		return dataResponse.toString();
+		
+	}
+
+	@ResponseBody
+	@PostMapping("/register")
+	public String register(@RequestBody Map<String, Object> requestData) 
+	{
+		String userName = requestData.get("userName").toString();
+	    String userId = requestData.get("userId").toString();
+	    String userMail = requestData.get("userMail").toString();
+	    String password = requestData.get("password").toString();
+	    Long userNumber = Long.parseLong(requestData.get("userNumber").toString());
+	    int userCategory = Integer.parseInt(requestData.get("userCategory").toString());
+
+	    
+	    
+	    UserDTO existUser = new UserDTO(userName, userId, userMail, password, userNumber, userCategory, false);
+	    ObjectMapper mapper = new ObjectMapper();
+	    JsonNode dataResponse = mapper.createObjectNode();
+	    boolean result = false;
+	    String userFetched = null;
+		try {
+			result = userService.userRegistration(existUser);
+			if(result)
+			{
 				UserDTO loggedUser = userService.fetchUser(userId);
 				userFetched = mapper.writeValueAsString(loggedUser);
 				dataResponse = mapper.readTree(userFetched);

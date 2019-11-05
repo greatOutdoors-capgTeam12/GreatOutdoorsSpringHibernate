@@ -1,9 +1,13 @@
 package com.capgemini.go.dao;
 
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.RetailerInventoryException;
 
+@Component
 public interface RetailerInventoryDao {
 	// Retailer Inventory Data Access Functions
 	/*******************************************************************************************************

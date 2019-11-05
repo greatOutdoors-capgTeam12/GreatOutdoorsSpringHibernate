@@ -81,19 +81,19 @@ public class RetailerInventoryDTO {
 	}
 
 	// constructors
-	public RetailerInventoryDTO () {
-			
-		}
+	public RetailerInventoryDTO() {
 
-	public RetailerInventoryDTO (String retailerId, byte productCategory, String productUniqueId, 
-				Calendar productOrderTimestamp, Calendar productDeliveryTimestamp, Calendar productSaleTimestamp) {
-			this.retailerId = retailerId;
-			this.productCategory = productCategory;
-			this.productUniqueId = productUniqueId;
-			this.productDispatchTimestamp = productOrderTimestamp;
-			this.productReceiveTimestamp = productDeliveryTimestamp;
-			this.productSaleTimestamp = productSaleTimestamp;
-		}
+	}
+
+	public RetailerInventoryDTO(String retailerId, byte productCategory, String productUniqueId,
+			Calendar productOrderTimestamp, Calendar productDeliveryTimestamp, Calendar productSaleTimestamp) {
+		this.retailerId = retailerId;
+		this.productCategory = productCategory;
+		this.productUniqueId = productUniqueId;
+		this.productDispatchTimestamp = productOrderTimestamp;
+		this.productReceiveTimestamp = productDeliveryTimestamp;
+		this.productSaleTimestamp = productSaleTimestamp;
+	}
 
 	// other helper methods
 	public static String calendarToString(Calendar instance) {
@@ -108,7 +108,8 @@ public class RetailerInventoryDTO {
 		// String result = "{" + day + "/" + month + "/" + year + "}";
 		// String result = "{" + day + "/" + month + "/" + year + "::" + hour + ":" +
 		// minute + ":" + second + ":" + milliSecond + "}";
-		String result = "{Date: " + day + "/" + month + "/" + year + ", Time:" + hour + ":" + minute + ":" + second + "}";
+		String result = "{Date: " + day + "/" + month + "/" + year + ", Time:" + hour + ":" + minute + ":" + second
+				+ "}";
 		return result;
 	}
 
@@ -126,10 +127,10 @@ public class RetailerInventoryDTO {
 				+ calendarToString(this.productDispatchTimestamp) + temp + "]";
 		return result;
 	}
-	
-	public boolean equals (RetailerInventoryDTO object) {
+
+	public boolean equals(RetailerInventoryDTO object) {
 		boolean equal = false;
-		
+
 		return equal;
 	}
 }

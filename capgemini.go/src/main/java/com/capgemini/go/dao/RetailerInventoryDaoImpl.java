@@ -358,7 +358,7 @@ public class RetailerInventoryDaoImpl implements RetailerInventoryDao {
 			CriteriaQuery<RetailerInventoryDTO> criteriaQuery = builder.createQuery(RetailerInventoryDTO.class);
 			Root<RetailerInventoryDTO> retialerInventory = criteriaQuery.from(RetailerInventoryDTO.class);
 			criteriaQuery.select(retialerInventory);
-			criteriaQuery.where(builder.equal(retialerInventory.get("retailerId"), queryArguments.getRetailerId()),
+			criteriaQuery.where(builder.equal(retialerInventory.get("retailerId"), queryArguments.getRetailerId()), builder.isNotNull(retialerInventory.get("productReceiveTimestamp")), 
 					builder.isNotNull(retialerInventory.get("productSaleTimestamp")));
 			result = session.createQuery(criteriaQuery).getResultList();
 			transaction.commit();

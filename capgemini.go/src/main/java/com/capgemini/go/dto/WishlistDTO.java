@@ -10,26 +10,21 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "WISHLIST")
 public class WishlistDTO implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2165469246059692902L;
 
 	@Id
 	@Column(name = "USER_ID", unique = true, nullable = false)
 	private String userId;
 	
-	@Column(name = "PRODUCT_ID", unique = true, nullable = false, length=20)
+	@Column(name = "PRODUCT_ID", unique = true, nullable = false)
 	private String productId;
 	
 	
-	public WishlistDTO()
-	{
+	public WishlistDTO() {
 		
 	}
 	
 	public WishlistDTO(String productId, String userId) {
-		super();
 		this.userId = userId;
 		this.productId = productId;
 	}
@@ -50,10 +45,9 @@ public class WishlistDTO implements Serializable {
 		this.productId = productId;
 	}
 
-	
 	@Override
 	public String toString() {
-		return "WishlistDTO [userId=" + userId +", productId=" + productId + "]";
+		return "WishlistDTO [userId=" + this.userId +", productId=" + this.productId + "]";
 	}
 	
 }
