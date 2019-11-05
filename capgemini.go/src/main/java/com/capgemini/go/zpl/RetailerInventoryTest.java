@@ -1,9 +1,6 @@
 package com.capgemini.go.zpl;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
-import java.util.TimeZone;
 
 import com.capgemini.go.dao.RetailerInventoryDao;
 import com.capgemini.go.dao.RetailerInventoryDaoImpl;
@@ -47,9 +44,9 @@ public class RetailerInventoryTest {
 		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO();
 		queryArguments.setRetailerId("rt1");
 		try {
-			List<RetailerInventoryDTO> result = retailer.getItemListByRetailer(queryArguments);
-			for (int index = 0; index < result.size(); index++)
-				System.out.println(result.get(index));
+			List<RetailerInventoryDTO> result = retailer.getListOfRetailers();
+			String x = String.valueOf(result.get(0));
+			System.out.println(x);
 		} catch (RetailerInventoryException e) {
 		System.err.println(e.getMessage());
 		}

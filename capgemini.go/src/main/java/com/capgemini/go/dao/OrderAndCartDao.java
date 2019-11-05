@@ -81,7 +81,7 @@ public interface OrderAndCartDao {
 	// PRODUCT UIN MAP TABLE MANIPULATION FUNCTIONS
 	/*******************************************************************************************************
 	 * Function Name : updateProductUinMap <br>
-	 * Input Parameters : ProductUinMapDTO (productId, productUIN) <br>
+	 * Input Parameters : ProductUINMapDTO (productId, productUIN) <br>
 	 * Return Type : boolean <br>
 	 * Throws : RetailerException <br>
 	 * Author : Azhar <br>

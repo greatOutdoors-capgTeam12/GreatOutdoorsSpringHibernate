@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.capgemini.go.dto.CartDTO;
 import com.capgemini.go.dto.OrderDTO;
 import com.capgemini.go.dto.OrderProductMapDTO;
+import com.capgemini.go.dto.ProductIdentityDTO;
 import com.capgemini.go.dto.ProductUINMapDTO;
 import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.RetailerException;
@@ -270,7 +271,7 @@ public class OrderAndCartDaoImpl implements OrderAndCartDao {
 	// PRODUCT UIN MAP TABLE MANIPULATION FUNCTIONS
 	/*******************************************************************************************************
 	 * Function Name : updateProductUinMap <br>
-	 * Input Parameters : ProductUinMapDTO (productId, productUIN) <br>
+	 * Input Parameters : ProductUINMapDTO (productId, productUIN) <br>
 	 * Return Type : boolean <br>
 	 * Throws : RetailerException <br>
 	 * Author : Azhar <br>
@@ -280,14 +281,23 @@ public class OrderAndCartDaoImpl implements OrderAndCartDao {
 	public boolean updateProductUinMap(ProductUINMapDTO ProductUinMapEntity) throws RetailerException {
 		boolean itemUpdated = false;
 		
+		
+		
+		ProductUINMapDTO itemTobeUpdated = new ProductUINMapDTO();
+		itemTobeUpdated.setProductUniqueIdentity(ProductUinMapEntity.getProductUniqueIdentity());
+		itemTobeUpdated.setProductIsPresent(false); 
+		
+		
+		
 		Transaction transaction = null;
 		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
-			List<ProductUINMapDTO> itemList = session.createQuery("from ProductUinMapDTO", ProductUINMapDTO.class).list();
+			List<ProductUINMapDTO> itemList = session.createQuery("from ProductUINMapDTO", ProductUINMapDTO.class).list();
 			boolean productNotFound = true;
 			for (ProductUINMapDTO item : itemList) {
-				if (item.equals(ProductUinMapEntity)) {
+				if (item.getProductUniqueIdentity().getProductId().equals(itemTobeUpdated.getProductUniqueIdentity().getProductId()) 
+						&& item.getProductUniqueIdentity().getProductUIN().equals(itemTobeUpdated.getProductUniqueIdentity().getProductUIN())) {
 					productNotFound = false;
 					break;
 				}
@@ -296,8 +306,7 @@ public class OrderAndCartDaoImpl implements OrderAndCartDao {
 				GoLog.getLogger(OrderAndCartDaoImpl.class).debug(ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 				throw new RetailerException("updateProductUinMap - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 			} else {
-				ProductUinMapEntity.setProductIsPresent(false);
-				session.merge(ProductUinMapEntity);
+				session.merge(itemTobeUpdated);
 			}
 			transaction.commit();
 		} catch (IllegalStateException error) {

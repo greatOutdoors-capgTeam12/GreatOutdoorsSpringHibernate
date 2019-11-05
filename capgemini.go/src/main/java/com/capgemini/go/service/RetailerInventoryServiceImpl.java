@@ -188,21 +188,31 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerInventoryException {
+		GoLog.getLogger(RetailerInventoryServiceImpl.class).info("getListOfRetailers - function called");
 		List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
-		
-		List<RetailerInventoryDTO> listOfDeliveredItems = this.retailerInventoryDao.getListOfRetailers();
-		try {
-			for (RetailerInventoryDTO item : listOfDeliveredItems) {
-				String retailerName = this.userDao.getUserById(item.toString()).getUserName();
+		List<RetailerInventoryDTO> tempListOfDeliveredItems = this.retailerInventoryDao.getListOfRetailers();
+		List<RetailerInventoryDTO> listOfDeliveredItems = new ArrayList<RetailerInventoryDTO> ();
+		for (int index = 0; index < tempListOfDeliveredItems.size(); index++) {
+			listOfDeliveredItems.add(new RetailerInventoryDTO (String.valueOf(tempListOfDeliveredItems.get(index)), 
+					(byte)0, null, null, null, null));
+		}
+		GoLog.getLogger(RetailerInventoryServiceImpl.class).info("getListOfRetailers - List extracted");
+		for (RetailerInventoryDTO item : listOfDeliveredItems) {
+			String retailerName = null;
+			try {
+				GoLog.getLogger(RetailerInventoryServiceImpl.class).info("getListOfRetailers - Retailer Id " + item.getRetailerId());
+				retailerName = this.userDao.getUserById(item.getRetailerId()).getUserName();
+			} catch (Exception error) {
+				GoLog.getLogger(RetailerInventoryServiceImpl.class).error("getListOfRetailers - " + error.getMessage());
+				retailerName = "ID (" + item.getRetailerId() + ")";
+			} finally {
 				RetailerInventoryBean object = new RetailerInventoryBean ();
-				object.setRetailerId(item.toString());
+				object.setRetailerId(item.getRetailerId());
 				object.setRetailerName(retailerName);
 				result.add(object);
 			}
-		} catch (UserException error) {
-			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
-			throw new RetailerInventoryException ("getListOfRetailers - " + ExceptionConstants.FAILED_TO_RETRIEVE_USERNAME);
 		}
+		GoLog.getLogger(RetailerInventoryServiceImpl.class).info("getListOfRetailers - function return");
 		return result;
 	}
 

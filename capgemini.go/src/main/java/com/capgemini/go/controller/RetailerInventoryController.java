@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.go.bean.RetailerInventoryBean;
 import com.capgemini.go.service.RetailerInventoryService;
+import com.capgemini.go.utility.GoLog;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -47,6 +48,7 @@ public class RetailerInventoryController {
 	@ResponseBody
 	@PostMapping("/RetailerList")
 	public String getRetailerList () {
+		GoLog.getLogger(RetailerInventoryController.class).info("Request for Retailer List Received");
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode dataResponse = mapper.createObjectNode();
 		JsonArray retailerList = new JsonArray();
