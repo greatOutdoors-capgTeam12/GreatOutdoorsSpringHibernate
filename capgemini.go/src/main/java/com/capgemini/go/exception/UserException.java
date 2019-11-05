@@ -1,35 +1,48 @@
-/**
- * 
- * User Exception
- */
-
 package com.capgemini.go.exception;
 
 public class UserException extends Exception {
 
-	private static final long serialVersionUID = 2L;
-
+	/**
+	 * 
+	 */
 	public UserException() {
+		super();
 
 	}
 
+	/**
+	 * @param message
+	 * @param cause
+	 * @param enableSuppression
+	 * @param writableStackTrace
+	 */
+	public UserException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+
+	}
+
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public UserException(String message, Throwable cause) {
+		super(message, cause);
+
+	}
+
+	/**
+	 * @param message
+	 */
 	public UserException(String message) {
 		super(message);
 
 	}
 
-	public UserException(Throwable arg0) {
-		super(arg0);
-
-	}
-
-	public UserException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-
-	}
-
-	public UserException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
+	/**
+	 * @param cause
+	 */
+	public UserException(Throwable cause) {
+		super(cause);
 
 	}
 

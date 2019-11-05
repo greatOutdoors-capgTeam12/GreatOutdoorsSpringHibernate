@@ -32,8 +32,48 @@ public class ProductServiceImpl implements ProductService {
 	 ********************************************************************************************************/
 
 	public List<ProductDTO> viewAllProducts() throws ProductException {
-		
+
 		return productDao.viewAllProducts();
+	}
+
+	// ------------------------ GreatOutdoor Application --------------------------
+	/*******************************************************************************************************
+	 * - Function Name : addProduct - Input Parameters : <ProductDTO> product -
+	 * Return Type : boolean - Throws : ProductException - Author : AGNIBHA CHANDRA
+	 * - Creation Date : 21/9/2019 - Description : to add a product in product
+	 * database
+	 * 
+	 ********************************************************************************************************/
+
+	public boolean addProduct(ProductDTO product) throws ProductException {
+		return productDao.addProduct(product);
+	}
+
+	// ------------------------ GreatOutdoor Application --------------------------
+	/*******************************************************************************************************
+	 * - Function Name : editProduct - Input Parameters : <ProductDTO> product -
+	 * Return Type : boolean - Throws : ProductException - Author : AGNIBHA CHANDRA
+	 * - Creation Date : 21/9/2019 - Description : to edit a product in product
+	 * database
+	 * 
+	 *******************************************************************************************************/
+
+	@Override
+	public boolean editProduct(ProductDTO product) throws ProductException {
+		return productDao.editProduct(product);
+	}
+
+	// ------------------------ GreatOutdoor Application --------------------------
+	/*******************************************************************************************************
+	 * - Function Name : deleteProduct - Input Parameters : String productId Return
+	 * Type : boolean - Throws : ProductException - Author : AGNIBHA CHANDRA -
+	 * Creation Date : 21/9/2019 - Description : to remove a product in product
+	 * database
+	 * 
+	 ********************************************************************************************************/
+
+	public boolean deleteProduct(String productId) throws ProductException {
+		return productDao.deleteProduct(productId);
 	}
 
 }

@@ -1,19 +1,8 @@
 package com.capgemini.go.utility;
 
-import java.net.ConnectException;
-import java.util.List;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-
-import com.capgemini.go.dao.HQLQuerryMapper;
-import com.capgemini.go.dao.UserDaoImpl;
-import com.capgemini.go.dto.UserDTO;
 import com.capgemini.go.exception.AuthenticationException;
 
 public class Authentication {
@@ -65,54 +54,5 @@ public class Authentication {
 		return strData;
 	}
 
-	/*******************************************************************************************************
-	 * - Function Name : authenticate - Input Parameters : String userId,int
-	 * category, Connection connection Return Type :boolean Throws :- Author :
-	 * Agnibha Creation Date : 21/9/2019 - Description : to authenticate the user
-	 * 
-	 * @throws ConnectException
-	 ********************************************************************************************************/
-	public static boolean authenticateUser(String userId, int category) throws ConnectException {
-		boolean authenticationStatus = false;
-
-		Session session = null;
-		SessionFactory sessionFactory = null;
-		try {
-			sessionFactory = HibernateUtil.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
-
-			Query validateUser = (Query) session.createQuery(HQLQuerryMapper.USER_ID_EXISTS);
-			validateUser.setParameter("idExist", userId);
-			List<UserDTO> existUser = (List<UserDTO>) validateUser.list();
-
-			for (UserDTO u : existUser) {
-				if (existUser != null) {
-					System.out.println(AuthenticationConstants.user_not_exists);
-					return authenticationStatus;
-				}
-
-				if (u.isUserActiveStatus() != true) {
-					System.out.println(AuthenticationConstants.login_error);
-					return authenticationStatus;
-				}
-				if (u.getUserCategory() != category) {
-					System.out.println(AuthenticationConstants.access_error);
-					return authenticationStatus;
-				}
-				authenticationStatus = true;
-				System.out.print(AuthenticationConstants.welcome);
-
-			}
-			session.getTransaction().commit();
-		} catch (HibernateException e) {
-			session.getTransaction().rollback();
-			GoLog.getLogger(UserDaoImpl.class).error(e.getMessage());
-			System.out.println(e.getMessage());
-		} finally {
-			session.close();
-		}
-		return authenticationStatus;
-	}
-
+	
 }

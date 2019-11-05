@@ -1,7 +1,3 @@
-/**
- * Exception class to Show error in Authentication Function
- */
-
 package com.capgemini.go.exception;
 
 public class AuthenticationException extends Exception {
@@ -10,23 +6,24 @@ public class AuthenticationException extends Exception {
 
 	}
 
-	public AuthenticationException(String arg0) {
-		super(arg0);
+	public AuthenticationException(String message) {
+		super(message);
 
 	}
 
-	public AuthenticationException(Throwable arg0) {
-		super(arg0);
+	public AuthenticationException(Throwable cause) {
+		super(cause);
 
 	}
 
-	public AuthenticationException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
+	public AuthenticationException(String message, Throwable cause) {
+		super(message, cause);
 
 	}
 
-	public AuthenticationException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
+	public AuthenticationException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 
 	}
 

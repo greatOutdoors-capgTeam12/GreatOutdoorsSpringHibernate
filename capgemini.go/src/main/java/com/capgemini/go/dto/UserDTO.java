@@ -14,10 +14,11 @@ public class UserDTO implements Serializable {
 	
 	private static final long serialVersionUID = -8450180103620249767L;
 
-	@Id
+	
 	@Column(name = "USER_NAME", unique = false, nullable = false, length = 50)
 	private String userName;
 
+	@Id
 	@Column(name = "USER_ID", unique = true, nullable = false)
 	private String userId;
 

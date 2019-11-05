@@ -10,52 +10,47 @@ import com.capgemini.go.exception.UserException;
 
 public interface UserService {
 
-	
 	// ------------------------ GreatOutdoor Application --------------------------
-		/*******************************************************************************************************
-		 * - Function Name : userRegistration 
-		 * - Input Parameters : userID, userName, userMail, userNumber, activeStatus, password, userCategory 
-		 * - Return Type : boolean 
-		 * - Author : CAPGEMINI 
-		 * - Creation Date : 21/9/2019 
-		 * - Description : to register a new user
-		 * 
-		 * @throws UserException
-		 * @throws ConnectException 
-		 ********************************************************************************************************/
-	boolean userRegistration(UserDTO user) throws UserException,ConnectException;
+	/*******************************************************************************************************
+	 * - Function Name : userRegistration - Input Parameters : userID, userName,
+	 * userMail, userNumber, activeStatus, password, userCategory - Return Type :
+	 * boolean - Author : CAPGEMINI - Creation Date : 21/9/2019 - Description : to
+	 * register a new user
+	 * 
+	 * @throws UserException
+	 ********************************************************************************************************/
+	boolean userRegistration(UserDTO user) throws UserException;
 
 	// ------------------------ GreatOutdoor Application --------------------------
-		/*******************************************************************************************************
-		 * - Function Name : userLogin 
-		 * - Input Parameters : userID, password 
-		 * - Return Type : boolean 
-		 * - Author : CAPGEMINI 
-		 * - Creation Date : 21/9/2019 
-		 * - Description : to login a user
-		 * 
-		 * @throws Exception
-		 ********************************************************************************************************/
+	/*******************************************************************************************************
+	 * - Function Name : prodMastRegistration - Input Parameters : <UserDTO> user -
+	 * Return Type : boolean - Throws :UserException - Author:AGNIBHA CHANDRA -
+	 * Creation Date : 21/9/2019 - Description : to register a new product Master
+	 * 
+	 * 
+	 ********************************************************************************************************/
 
-	boolean userLogin(UserDTO user) throws UserException, Exception;
+	boolean prodMastRegistration(UserDTO productMaster) throws UserException;
 
-	
 	// ------------------------ GreatOutdoor Application --------------------------
-		/*******************************************************************************************************
-		 * - Function Name : userLogout 
-		 * - Input Parameters : userID
-		 * - Return Type : boolean 
-		 * - Throws :UserExecution 
-		 * - Author : CAPGEMINI 
-		 * - Creation Date : 21/9/2019 
-		 * - Description : to logout a user
-		 * 
-		 * @throws UserException
-		 * @throws SQLException
-		 * @throws ConnectException 
-		 ********************************************************************************************************/
+	/*******************************************************************************************************
+	 * - Function Name : userLogin - Input Parameters : userID, password - Return
+	 * Type : boolean - Throws :UserException - Author : AMAN - Creation Date
+	 * :21/9/2019 - Description : to login a user
+	 * 
+	 * @throws UserException
+	 * @throws Exception
+	 ********************************************************************************************************/
+	UserDTO userLogin(UserDTO user) throws UserException;
 
-	boolean userLogout(UserDTO user) throws UserException,ConnectException;
-
-	UserDTO fetchUser(String userId) throws UserException;
+	// ------------------------ GreatOutdoor Application --------------------------
+	/*******************************************************************************************************
+	 * - Function Name : logout - Input Parameters : userID, password - Return Type
+	 * : boolean - Throws :UserException - Author : AMAN - Creation Date :21/9/2019
+	 * - Description : to logout a user
+	 * 
+	 * @throws UserException
+	 * @throws Exception
+	 ********************************************************************************************************/
+	boolean logout(String userId) throws UserException;
 }

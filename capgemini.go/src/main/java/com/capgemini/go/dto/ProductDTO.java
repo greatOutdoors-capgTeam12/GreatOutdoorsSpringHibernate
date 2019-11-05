@@ -46,7 +46,8 @@ public class ProductDTO implements Serializable {
 	@Column(name = "PRODUCT_NAME", unique = false, nullable = false, length = 100)
 	private String productName;
 
-	public ProductDTO() {
+	public ProductDTO()
+	{
 		
 	}
 	

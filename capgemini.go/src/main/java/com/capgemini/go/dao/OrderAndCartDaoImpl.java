@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.capgemini.go.dto.CartDTO;
 import com.capgemini.go.dto.OrderDTO;
 import com.capgemini.go.dto.OrderProductMapDTO;
-import com.capgemini.go.dto.ProductUinMapDTO;
+import com.capgemini.go.dto.ProductUINMapDTO;
 import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.RetailerException;
 import com.capgemini.go.utility.GoLog;
@@ -277,21 +277,17 @@ public class OrderAndCartDaoImpl implements OrderAndCartDao {
 	 * Creation Date : 21/9/2019 <br>
 	 * Description : to update present status of an unique item <br>
 	 ********************************************************************************************************/
-	public boolean updateProductUinMap(ProductUinMapDTO ProductUinMapEntity) throws RetailerException {
+	public boolean updateProductUinMap(ProductUINMapDTO ProductUinMapEntity) throws RetailerException {
 		boolean itemUpdated = false;
-		
-		ProductUinMapDTO itemTobeUpdated = new ProductUinMapDTO (ProductUinMapEntity.getProductId(), 
-				ProductUinMapEntity.getProductUin(), false);
 		
 		Transaction transaction = null;
 		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
-			List<ProductUinMapDTO> itemList = session.createQuery("from ProductUinMapDTO", ProductUinMapDTO.class).list();
+			List<ProductUINMapDTO> itemList = session.createQuery("from ProductUinMapDTO", ProductUINMapDTO.class).list();
 			boolean productNotFound = true;
-			for (ProductUinMapDTO item : itemList) {
-				if (item.getProductId().equals(itemTobeUpdated.getProductId()) 
-						&& item.getProductUin().equals(itemTobeUpdated.getProductUin())) {
+			for (ProductUINMapDTO item : itemList) {
+				if (item.equals(ProductUinMapEntity)) {
 					productNotFound = false;
 					break;
 				}
@@ -300,7 +296,8 @@ public class OrderAndCartDaoImpl implements OrderAndCartDao {
 				GoLog.getLogger(OrderAndCartDaoImpl.class).debug(ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 				throw new RetailerException("updateProductUinMap - " + ExceptionConstants.PRODUCT_NOT_IN_INVENTORY);
 			} else {
-				session.merge(itemTobeUpdated);
+				ProductUinMapEntity.setProductIsPresent(false);
+				session.merge(ProductUinMapEntity);
 			}
 			transaction.commit();
 		} catch (IllegalStateException error) {

@@ -3,7 +3,7 @@ package com.capgemini.go.dao;
 import com.capgemini.go.dto.CartDTO;
 import com.capgemini.go.dto.OrderDTO;
 import com.capgemini.go.dto.OrderProductMapDTO;
-import com.capgemini.go.dto.ProductUinMapDTO;
+import com.capgemini.go.dto.ProductUINMapDTO;
 import com.capgemini.go.exception.RetailerException;
 
 public interface OrderAndCartDao {
@@ -88,6 +88,6 @@ public interface OrderAndCartDao {
 	 * Creation Date : 21/9/2019 <br>
 	 * Description : to update present status of an unique item <br>
 	 ********************************************************************************************************/
-	boolean updateProductUinMap (ProductUinMapDTO ProductUinMapEntity) throws RetailerException;
+	boolean updateProductUinMap (ProductUINMapDTO ProductUinMapEntity) throws RetailerException;
 	// END OF PRODUCT UIN MAP TABLE MANIPULATION FUNCTIONS
 }

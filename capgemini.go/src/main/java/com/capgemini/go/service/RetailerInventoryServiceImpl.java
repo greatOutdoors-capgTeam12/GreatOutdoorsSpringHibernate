@@ -101,7 +101,7 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 		List<RetailerInventoryDTO> listOfDeliveredItems = this.retailerInventoryDao.getDeliveredItemsDetails(queryArguments);
 				
 		try {
-			retailerName = this.userDao.fetchUser(retailerId).getUserName();
+			retailerName = this.userDao.getUserById(retailerId).getUserName();
 			
 			for (RetailerInventoryDTO deliveredItem : listOfDeliveredItems) {
 				RetailerInventoryBean object = new RetailerInventoryBean ();

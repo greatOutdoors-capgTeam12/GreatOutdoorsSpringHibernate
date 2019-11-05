@@ -1,13 +1,5 @@
 package com.capgemini.go.dao;
 
-import java.net.ConnectException;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.capgemini.go.dto.UserDTO;
@@ -23,11 +15,21 @@ public interface UserDao {
 	 * boolean - Throws :UserException - Author:AMAN - Creation Date : 21/9/2019 -
 	 * Description : to register a new user
 	 * 
-	 * @throws ConnectException
-	 * @throws SQLException
+	 * 
 	 ********************************************************************************************************/
 
-	boolean userRegistration(UserDTO user) throws UserException, ConnectException;
+	boolean userRegistration(UserDTO user) throws UserException;
+
+	// ------------------------ GreatOutdoor Application --------------------------
+	/*******************************************************************************************************
+	 * - Function Name : prodMastRegistration - Input Parameters : <UserDTO> user -
+	 * Return Type : boolean - Throws :UserException - Author:AGNIBHA CHANDRA -
+	 * Creation Date : 21/9/2019 - Description : to register a new product Master
+	 * 
+	 * 
+	 ********************************************************************************************************/
+
+	boolean prodMastRegistration(UserDTO user) throws UserException;
 
 	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
@@ -38,20 +40,26 @@ public interface UserDao {
 	 * @throws UserException
 	 * @throws Exception
 	 ********************************************************************************************************/
-	boolean userLogin(UserDTO user) throws UserException, Exception;
+	UserDTO userLogin(UserDTO user) throws UserException;
 
 	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
-	 * - Function Name : userLogout - Input Parameters : userID - Return Type :
-	 * boolean - Throws :UserException - Author : AMAN - Creation Date : 21/9/2019 -
-	 * Description : to logout a user
+	 * - Function Name : logout - Input Parameters : userID, password - Return Type
+	 * : boolean - Throws :UserException - Author : AMAN - Creation Date :21/9/2019
+	 * - Description : to logout a user
 	 * 
-	 * @throws SQLException
-	 * @throws ConnectException
+	 * @throws UserException
+	 * @throws Exception
 	 ********************************************************************************************************/
+	boolean logout(String userId) throws UserException;
 
-	boolean userLogout(UserDTO user) throws UserException,  ConnectException;
-	
-	UserDTO fetchUser(String userId) throws UserException;
-
+	/*******************************************************************************************************
+	 * - Function Name : getUserById - Input Parameters : userID - Return Type
+	 * : UserDTO - Throws :UserException - Author : Kunal - Creation Date :21/9/2019
+	 * - Description : to logout a user
+	 * 
+	 * @throws UserException
+	 * @throws Exception
+	 ********************************************************************************************************/
+	UserDTO getUserById (String userId) throws UserException;
 }

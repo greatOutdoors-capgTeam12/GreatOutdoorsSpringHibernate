@@ -1,13 +1,8 @@
 package com.capgemini.go.dao;
 
-import java.io.IOException;
 import java.net.ConnectException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,29 +12,19 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.capgemini.go.dto.ProductDTO;
 import com.capgemini.go.dto.UserDTO;
-import com.capgemini.go.exception.DatabaseException;
 import com.capgemini.go.exception.ExceptionConstants;
-import com.capgemini.go.exception.ProductException;
 import com.capgemini.go.exception.UserException;
 import com.capgemini.go.utility.Authentication;
-import com.capgemini.go.utility.AuthenticationConstants;
 import com.capgemini.go.utility.GoLog;
-import com.capgemini.go.utility.HibernateUtil;
-import com.capgemini.go.utility.PropertiesLoader;
-import com.capgemini.go.utility.Validator;
+import com.capgemini.go.utility.InfoConstants;
 
 @Repository(value = "userDao")
 public class UserDaoImpl implements UserDao {
-	private static Properties exceptionProps = null;
-	private static Properties goProps = null;
-	private static final String EXCEPTION_PROPERTIES_FILE = "exceptionStatement.properties";
-	private static final String GO_PROPERTIES_FILE = "goUtility.properties";
 
 	// this class is wired with the sessionFactory to do some operation in the
 	// database
@@ -70,93 +55,74 @@ public class UserDaoImpl implements UserDao {
 	 * @throws HibernateException
 	 ********************************************************************************************************/
 
-	public boolean userRegistration(UserDTO user) throws UserException, ConnectException {
+	public boolean userRegistration(UserDTO user) throws UserException {
 
-		boolean userRegStatus = false;
-
-		String userName = user.getUserName();
-		String userId = user.getUserId();
-		String userMail = user.getUserMail();
-		String userPassword = user.getUserPassword();
-		long userNumber = user.getUserNumber();
-		int userCategory = user.getUserCategory();
-
+		boolean userRegistrationStatus = false;
 		Session session = null;
-		SessionFactory sessionFactory = null;
-
+		Transaction transaction = null;
+		CriteriaBuilder criteriaBuilder = null;
+		UserDTO existingUser = null;
 		try {
-			exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
-			goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory = HibernateUtil.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
-
-			if (!(userCategory == Integer.parseInt(goProps.getProperty("SALES_REP"))
-					|| userCategory == Integer.parseInt(goProps.getProperty("RETAILER")))) {
-				GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("invalid_registration"));
-				throw new UserException(exceptionProps.getProperty("invalid_registration"));
-
+			session = getSessionFactory().openSession();
+			transaction = session.getTransaction();
+			transaction.begin();
+			existingUser = session.find(UserDTO.class, user.getUserId());
+			if (existingUser != null) {
+				GoLog.getLogger(UserDaoImpl.class).error(ExceptionConstants.USER_EXISTS);
+				throw new UserException(ExceptionConstants.USER_EXISTS);
 			}
 
-			if (Validator.validatePhoneNumber(userNumber) != true) {
-				GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("invalid_phone_number"));
-				throw new UserException(exceptionProps.getProperty("invalid_phone_number"));
+			List<UserDTO> u = new ArrayList<UserDTO>();
+			// Checking unique mail
+			criteriaBuilder = session.getCriteriaBuilder();
+			CriteriaQuery<UserDTO> criteriaQuery = criteriaBuilder.createQuery(UserDTO.class);
+			Root<UserDTO> existuser = criteriaQuery.from(UserDTO.class);
+			criteriaQuery.where(criteriaBuilder.equal(existuser.get("userMail"), user.getUserMail()));
+			u = session.createQuery(criteriaQuery).getResultList();
+			if (u.size() != 0) {
+				GoLog.getLogger(UserDaoImpl.class).error(ExceptionConstants.USER_MAIL_EXISTS);
+				throw new UserException(ExceptionConstants.USER_MAIL_EXISTS);
+			}
+			
+			// Checking unique number
+			criteriaBuilder = session.getCriteriaBuilder();
+			criteriaQuery = criteriaBuilder.createQuery(UserDTO.class);
+			existuser = criteriaQuery.from(UserDTO.class);
+			criteriaQuery.where(criteriaBuilder.equal(existuser.get("userNumber"), user.getUserNumber()));
+			u = session.createQuery(criteriaQuery).getResultList();
+			if (u.size() != 0) {
+				GoLog.getLogger(UserDaoImpl.class).error(ExceptionConstants.USER_NUMBER_EXISTS);
+				throw new UserException(ExceptionConstants.USER_NUMBER_EXISTS);
 			}
 
-			if (Validator.isValid(userMail) != true) {
-				GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("invalid_email"));
-				throw new UserException(exceptionProps.getProperty("invalid_email"));
-			}
-
-			if (Validator.validateUserId(userId) != true) {
-				GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("invalid_userId"));
-				throw new UserException(exceptionProps.getProperty("invalid_userId"));
-			}
-			Query validateNumberMail = (Query) session.createQuery(HQLQuerryMapper.VALIDATE_NUMBER_EMAIL);
-
-			validateNumberMail.setParameter("existNum", userNumber);
-			validateNumberMail.setParameter("existMail", userMail);
-
-			Long existNumMail = (Long) validateNumberMail.uniqueResult();
-			if (existNumMail != 0) {
-				GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("number_mail_reg"));
-				throw new UserException(exceptionProps.getProperty("number_mail_reg"));
-			}
-
-			Query validateUser = (Query) session.createQuery(HQLQuerryMapper.USER_ID_EXISTS);
-			validateUser.setParameter("idExist", userId);
-			List<UserDTO> existUser = (List<UserDTO>) validateUser.list();
-			for (UserDTO u : existUser) {
-				if (existUser != null) {
-					GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("user_exists"));
-					throw new UserException(exceptionProps.getProperty("user_exists"));
-				}
-				break;
-			}
-
-			UserDTO newUser = new UserDTO();
-
-			newUser.setUserName(userName);
-			newUser.setUserId(userId);
-			newUser.setUserMail(userMail);
-			newUser.setUserPassword(userPassword);
-			newUser.setUserNumber(userNumber);
-			newUser.setUserCategory(userCategory);
-
-			session.save(newUser);
-
-			userRegStatus = true;
-			session.getTransaction().commit();
-
-		} catch (HibernateException | IOException e) {
-			//session.getTransaction().rollback();
-			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("registration_failed"));
-			throw new UserException(" >>>" + e.getMessage());
+			session.save(user);
+			GoLog.getLogger(ProductDaoImpl.class).info(InfoConstants.User_Added_Success);
+			transaction.commit();
+			userRegistrationStatus = true;
+		} catch (Exception exp) {
+			transaction.rollback();
+			GoLog.getLogger(UserDaoImpl.class).error(ExceptionConstants.USER_REG_ERROR);
+			throw new UserException(ExceptionConstants.USER_REG_ERROR + exp.getMessage());
 		} finally {
+
 			session.close();
 		}
-		return userRegStatus;
+		return userRegistrationStatus;
 
+	}
+
+	// ------------------------ GreatOutdoor Application --------------------------
+	/*******************************************************************************************************
+	 * - Function Name : prodMastRegistration - Input Parameters : <UserDTO> user -
+	 * Return Type : boolean - Throws :UserException - Author:AGNIBHA CHANDRA -
+	 * Creation Date : 21/9/2019 - Description : to register a new product Master
+	 * 
+	 * 
+	 ********************************************************************************************************/
+
+	public boolean prodMastRegistration(UserDTO productMaster) throws UserException {
+
+		return userRegistration(productMaster);
 	}
 
 	// ------------------------ GreatOutdoor Application --------------------------
@@ -168,197 +134,115 @@ public class UserDaoImpl implements UserDao {
 	 * @throws UserException
 	 * @throws Exception
 	 ********************************************************************************************************/
-
-	public boolean userLogin(UserDTO user) throws UserException, Exception, HibernateException {
-		boolean userFound = false;
+	public UserDTO userLogin(UserDTO user) throws UserException {
 		boolean userLoginStatus = false;
-
-		String userId = user.getUserId();
-		String userPassword = user.getUserPassword();
-System.out.println("1");
 		Session session = null;
-		SessionFactory sessionFactory = null;
-
+		Transaction transaction = null;
+		UserDTO existingUser = null;
 		try {
-			System.out.println("2");
-			exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
-			goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-//			sessionFactory = HibernateUtil.getSessionFactory();
 			session = getSessionFactory().openSession();
-			session.beginTransaction();
-
-			Query validateUser = (Query) session.createQuery(HQLQuerryMapper.USER_ID_EXISTS);
-			validateUser.setParameter("idExist", userId);
-			List<UserDTO> existUser = (List<UserDTO>) validateUser.list();
-			for (UserDTO u : existUser) {
-				userFound = true;
-
-				if (u.isUserActiveStatus() == false) {
-					System.out.println("3");
-					System.out.println(u.getUserPassword());
-					System.out.println(user.getUserPassword());
-					System.out.println(Authentication.encrypt(user.getUserPassword(), AuthenticationConstants.secretKey));
-					if (u.getUserPassword().equals(
-							Authentication.encrypt(user.getUserPassword(), AuthenticationConstants.secretKey))) {
-						System.out.println("4");
-						u.setUserActiveStatus(true);
-						userLoginStatus = true;
-
-						break;
-					} else {
-						GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("incorrect_password"));
-						throw new UserException(exceptionProps.getProperty("incorrect_password"));
-					}
-				}
-
-				else {
-					GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("already_loggedin"));
-					throw new UserException(exceptionProps.getProperty("already_loggedin"));
-
-				}
-
+			transaction = session.getTransaction();
+			transaction.begin();
+			existingUser = session.find(UserDTO.class, user.getUserId());
+			if (existingUser == null) {
+				GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.USER_NOT_EXISTS);
+				throw new UserException(ExceptionConstants.USER_NOT_EXISTS);
 			}
-			session.getTransaction().commit();
-		}
+			if (existingUser.isUserActiveStatus() == true) {
+				GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.ALREADY_LOGGEDIN);
+				throw new UserException(ExceptionConstants.ALREADY_LOGGEDIN);
+			}
 
-		catch (HibernateException e) {
-			e.printStackTrace();
-			//session.getTransaction().rollback();
-			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("login_failure"));
-			throw new UserException(" >>>" + e.getMessage());
+			if (Authentication.encrypt(user.getUserPassword(), InfoConstants.secretKey)
+					.equals(existingUser.getUserPassword())) {
+				existingUser.setUserActiveStatus(true);
+				GoLog.getLogger(ProductDaoImpl.class).info(InfoConstants.User_Login_Success);
+				transaction.commit();
+				userLoginStatus = true;
+			}
+
+			else {
+				GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.PASSWORD_MISMATCH);
+				throw new UserException(ExceptionConstants.PASSWORD_MISMATCH);
+			}
+		} catch (Exception exp) {
+			transaction.rollback();
+			GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.USER_LOGIN_ERROR);
+			throw new UserException(ExceptionConstants.USER_LOGIN_ERROR + exp.getMessage());
 		} finally {
+
 			session.close();
 		}
-		if (userFound == false) {
-			userLoginStatus = false;
-			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("userId_not_found_failure"));
-			throw new UserException(exceptionProps.getProperty("userId_not_found_failure"));
 
-		}
-		return userLoginStatus;
+		return existingUser;
+
 	}
 
 	// ------------------------ GreatOutdoor Application --------------------------
 	/*******************************************************************************************************
-	 * - Function Name : userLogout - Input Parameters : userID - Return Type :
-	 * boolean - Throws :UserException - Author : AMAN - Creation Date : 21/9/2019 -
-	 * Description : to logout a user
+	 * - Function Name : logout - Input Parameters : userID, password - Return Type
+	 * : boolean - Throws :UserException - Author : AMAN - Creation Date :21/9/2019
+	 * - Description : to logout a user
 	 * 
-	 * @throws SQLException
-	 * @throws ConnectException
+	 * @throws UserException
+	 * @throws Exception
 	 ********************************************************************************************************/
-
-	@Override
-	public boolean userLogout(UserDTO user) throws UserException, ConnectException {
-
-		boolean userFound = false;
+	public boolean logout(String userId) throws UserException {
 		boolean userLogoutStatus = false;
-		String userId = user.getUserId();
-
 		Session session = null;
-		SessionFactory sessionFactory = null;
-
+		Transaction transaction = null;
+		UserDTO existingUser = null;
 		try {
-			exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
-			goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-			sessionFactory = HibernateUtil.getSessionFactory();
-			session = sessionFactory.getCurrentSession();
-			session.beginTransaction();
-
-			Query validateUser = (Query) session.createQuery(HQLQuerryMapper.USER_ID_EXISTS);
-			validateUser.setParameter("idExist", userId);
-
-			List<UserDTO> existUser = (List<UserDTO>) validateUser.list();
-			for (UserDTO u : existUser) {
-				userFound = true;
-
-				if (u.isUserActiveStatus() == true) {
-
-					u.setUserActiveStatus(false);
-					userLogoutStatus = true;
-
-					break;
-				} else {
-					GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("already_loggedout"));
-					throw new UserException(exceptionProps.getProperty("already_loggedout"));
-				}
+			session = getSessionFactory().openSession();
+			transaction = session.getTransaction();
+			transaction.begin();
+			existingUser = session.find(UserDTO.class, userId);
+			if (existingUser == null) {
+				GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.USER_NOT_EXISTS);
+				throw new UserException(ExceptionConstants.USER_NOT_EXISTS);
 			}
-
-			session.getTransaction().commit();
-
-		}
-
-		catch (HibernateException | IOException e) {
-			session.getTransaction().rollback();
-			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("logout_failure"));
-			throw new UserException(" >>>" + e.getMessage());
-
+			existingUser.setUserActiveStatus(false);
+			transaction.commit();
+			userLogoutStatus = true;
+		} catch (Exception exp) {
+			transaction.rollback();
+			GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.USER_LOGOUT_ERROR);
+			throw new UserException(ExceptionConstants.USER_LOGOUT_ERROR + exp.getMessage());
 		} finally {
+
 			session.close();
-		}
-
-		if (!userFound) {
-
-			GoLog.getLogger(UserDaoImpl.class).error(exceptionProps.getProperty("invalid_user"));
-			throw new UserException(exceptionProps.getProperty("invalid_user"));
-
 		}
 
 		return userLogoutStatus;
 	}
 
-	// ------------------------ GreatOutdoor Application --------------------------
-		/*******************************************************************************************************
-		 * - Function Name : userFetch - Input Parameters : userID - Return Type :User
-		 * Throws :UserException - Author : AGNIBHA/AMAN - Creation Date : 21/9/2019 -
-		 * Description : to fetch a user
-		 * 
-		 * @throws UserException
-		 * @throws ConnectException
-		 * 
-		 * @throws SQLException
-		 ********************************************************************************************************/
-		@Override
-		public UserDTO fetchUser(String userId) throws UserException {
-		
-			UserDTO loggedUser = null;
-			Session session = null;
-			SessionFactory sessionFactory = null;
-			try {
-				exceptionProps = PropertiesLoader.loadProperties(EXCEPTION_PROPERTIES_FILE);
-				goProps = PropertiesLoader.loadProperties(GO_PROPERTIES_FILE);
-				sessionFactory = HibernateUtil.getSessionFactory();
-				session = sessionFactory.getCurrentSession();
-				session.beginTransaction();
-
-				Query validateUser = (Query) session.createQuery(HQLQuerryMapper.USER_ID_EXISTS);
-				validateUser.setParameter("idExist", userId);
-
-				List<UserDTO> existUser = (List<UserDTO>) validateUser.list();
-				if(existUser.size() != 0) {
-				for (UserDTO u : existUser) {
-				
-					String userName =u.getUserName();
-					String userid = u.getUserId();
-					String userMail =u.getUserMail();
-					String userPassword =u.getUserPassword();
-					Long userNumber = u.getUserNumber();
-					int userCategory =u.getUserCategory();
-
-					loggedUser = new UserDTO(userName, userid, userMail, userPassword, userNumber, userCategory, true);
-				} 
-				}else {
-					throw new UserException("User Does Not Exists !");
-				}
-				session.getTransaction().commit();
-			} catch (HibernateException | IOException e) {
-				session.getTransaction().rollback();
-				GoLog.getLogger(UserDaoImpl.class).error(e.getMessage());
-				throw new UserException(exceptionProps.getProperty("filter_product_error") + " >>> " + e.getMessage());
+	/*******************************************************************************************************
+	 * - Function Name : getUserById - Input Parameters : userID - Return Type
+	 * : UserDTO - Throws :UserException - Author : Kunal - Creation Date :21/9/2019
+	 * - Description : to logout a user
+	 * 
+	 * @throws UserException
+	 * @throws Exception
+	 ********************************************************************************************************/
+	public UserDTO getUserById (String userId) throws UserException {
+		Transaction transaction = null;
+		Session session = null;
+		UserDTO existingUser = null;
+		try {
+			session = getSessionFactory().openSession();
+			transaction = session.getTransaction();
+			transaction.begin();
+			existingUser = session.find(UserDTO.class, userId);
+			if (existingUser == null) {
+				GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.USER_NOT_EXISTS);
+				throw new UserException(ExceptionConstants.USER_NOT_EXISTS);
 			}
-			finally {
-				session.close();
-			}
-			return loggedUser;
+			transaction.commit();
+		} catch (Exception exp) {
+			transaction.rollback();
+		} finally {
+			session.close();
 		}
+		return existingUser;
+	}
 }
