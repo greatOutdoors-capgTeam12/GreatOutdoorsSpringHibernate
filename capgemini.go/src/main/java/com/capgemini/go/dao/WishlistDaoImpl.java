@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -56,8 +57,10 @@ public class WishlistDaoImpl implements WishlistDao {
 	 *@throws SQLException 
 	 ********************************************************************************************************/
 	@Override
-	public boolean addProductToWishlist(WishlistDTO wishlist) throws WishlistException, ConnectException {
-		// TODO Auto-generated method stub
+	public boolean addProductToWishlist(WishlistDTO wishlist) throws WishlistException, ConnectException, HibernateException {
+		boolean addProductToWishlistStatus = false;
+		
+		
 		return false;
 	}
 	/*******************************************************************************************************
