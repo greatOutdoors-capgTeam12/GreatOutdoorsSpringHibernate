@@ -6,6 +6,7 @@ import com.capgemini.go.dao.RetailerInventoryDao;
 import com.capgemini.go.dao.RetailerInventoryDaoImpl;
 import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.exception.RetailerInventoryException;
+import com.capgemini.go.utility.DummyDataGenerator;
 import com.capgemini.go.utility.HibernateUtil;
 
 public class RetailerInventoryTest {
@@ -41,16 +42,16 @@ public class RetailerInventoryTest {
 //			System.out.println(e.getMessage());
 //		}
 		
-		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO();
-		queryArguments.setRetailerId("rt1");
-		try {
-			List<RetailerInventoryDTO> result = retailer.getListOfRetailers();
-			String x = String.valueOf(result.get(0));
-			System.out.println(x);
-		} catch (RetailerInventoryException e) {
-		System.err.println(e.getMessage());
-		}
+//		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO();
+//		queryArguments.setRetailerId("rt1");
+//		try {
+//			List<RetailerInventoryDTO> result = retailer.getListOfRetailers();
+//			String x = String.valueOf(result.get(0));
+//			System.out.println(x);
+//		} catch (RetailerInventoryException e) {
+//		System.err.println(e.getMessage());
+//		}
 		
-		//initializeRetailerInventoryWithData ();
+		DummyDataGenerator.initializeRetailerInventory (680, HibernateUtil.getSessionFactory());
 	}
 }

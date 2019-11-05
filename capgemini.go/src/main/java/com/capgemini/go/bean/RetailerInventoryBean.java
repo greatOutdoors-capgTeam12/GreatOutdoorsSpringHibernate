@@ -50,4 +50,8 @@ public class RetailerInventoryBean {
 		this.deliveryTimePeriod = deliveryTimePeriod;
 		this.shelfTimePeriod = shelfTimePeriod;
 	}
+	
+	public static String periodToString (Period period) {
+		return "Years: " + period.getYears() + " Months: " + period.getMonths() + " Days: " + period.getDays();
+	}
 }

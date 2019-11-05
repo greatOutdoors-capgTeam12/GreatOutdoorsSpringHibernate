@@ -15,7 +15,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.capgemini.go.dto.ProductDTO;
+import com.capgemini.go.dto.RetailerInventoryDTO;
 import com.capgemini.go.dto.UserDTO;
 import com.capgemini.go.exception.ExceptionConstants;
 import com.capgemini.go.exception.UserException;
@@ -234,7 +234,7 @@ public class UserDaoImpl implements UserDao {
 			transaction.begin();
 			existingUser = session.find(UserDTO.class, userId);
 			if (existingUser == null) {
-				GoLog.getLogger(ProductDaoImpl.class).error(ExceptionConstants.USER_NOT_EXISTS);
+				GoLog.getLogger(UserDaoImpl.class).error(ExceptionConstants.USER_NOT_EXISTS);
 				throw new UserException(ExceptionConstants.USER_NOT_EXISTS);
 			}
 			transaction.commit();
@@ -244,5 +244,35 @@ public class UserDaoImpl implements UserDao {
 			session.close();
 		}
 		return existingUser;
+	}
+	
+	/*******************************************************************************************************
+	 * - Function Name : getUserIdList - Input Parameters : - Return Type
+	 * : UserDTO - Throws :UserException - Author : Kunal - Creation Date :21/9/2019
+	 * - Description : to logout a user
+	 * 
+	 * @throws UserException
+	 * @throws Exception
+	 ********************************************************************************************************/
+	public List<UserDTO> getUserIdList () throws UserException {
+		List<UserDTO> result = null;
+		Transaction transaction = null;
+		Session session = getSessionFactory().openSession();
+		try {
+			transaction = session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<UserDTO> criteriaQuery = builder.createQuery(UserDTO.class);
+			Root<UserDTO> userTable = criteriaQuery.from(UserDTO.class);
+			criteriaQuery.select(userTable);
+			result = session.createQuery(criteriaQuery).getResultList();
+			transaction.commit();
+		} catch (Exception exp) {
+			transaction.rollback();
+			GoLog.getLogger(UserDaoImpl.class).error("getUserIdList - " + ExceptionConstants.INTERNAL_RUNTIME_ERROR);
+			throw new UserException ("getUserIdList - " + ExceptionConstants.INTERNAL_RUNTIME_ERROR);
+		} finally {
+			session.close();
+		}
+		return result;
 	}
 }

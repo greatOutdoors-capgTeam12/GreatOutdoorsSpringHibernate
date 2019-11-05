@@ -1,5 +1,7 @@
 package com.capgemini.go.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.capgemini.go.dto.UserDTO;
@@ -62,4 +64,14 @@ public interface UserDao {
 	 * @throws Exception
 	 ********************************************************************************************************/
 	UserDTO getUserById (String userId) throws UserException;
+	
+	/*******************************************************************************************************
+	 * - Function Name : getUserIdList - Input Parameters : - Return Type
+	 * : UserDTO - Throws :UserException - Author : Kunal - Creation Date :21/9/2019
+	 * - Description : to logout a user
+	 * 
+	 * @throws UserException
+	 * @throws Exception
+	 ********************************************************************************************************/
+	List<UserDTO> getUserIdList () throws UserException;
 }

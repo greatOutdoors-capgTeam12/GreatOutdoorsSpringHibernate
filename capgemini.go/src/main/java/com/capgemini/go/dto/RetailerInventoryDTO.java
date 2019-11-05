@@ -128,9 +128,55 @@ public class RetailerInventoryDTO {
 		return result;
 	}
 
-	public boolean equals(RetailerInventoryDTO object) {
-		boolean equal = false;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + productCategory;
+		result = prime * result + ((productDispatchTimestamp == null) ? 0 : productDispatchTimestamp.hashCode());
+		result = prime * result + ((productReceiveTimestamp == null) ? 0 : productReceiveTimestamp.hashCode());
+		result = prime * result + ((productSaleTimestamp == null) ? 0 : productSaleTimestamp.hashCode());
+		result = prime * result + ((productUniqueId == null) ? 0 : productUniqueId.hashCode());
+		result = prime * result + ((retailerId == null) ? 0 : retailerId.hashCode());
+		return result;
+	}
 
-		return equal;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RetailerInventoryDTO other = (RetailerInventoryDTO) obj;
+		if (productCategory != other.productCategory)
+			return false;
+		if (productDispatchTimestamp == null) {
+			if (other.productDispatchTimestamp != null)
+				return false;
+		} else if (!productDispatchTimestamp.equals(other.productDispatchTimestamp))
+			return false;
+		if (productReceiveTimestamp == null) {
+			if (other.productReceiveTimestamp != null)
+				return false;
+		} else if (!productReceiveTimestamp.equals(other.productReceiveTimestamp))
+			return false;
+		if (productSaleTimestamp == null) {
+			if (other.productSaleTimestamp != null)
+				return false;
+		} else if (!productSaleTimestamp.equals(other.productSaleTimestamp))
+			return false;
+		if (productUniqueId == null) {
+			if (other.productUniqueId != null)
+				return false;
+		} else if (!productUniqueId.equals(other.productUniqueId))
+			return false;
+		if (retailerId == null) {
+			if (other.retailerId != null)
+				return false;
+		} else if (!retailerId.equals(other.retailerId))
+			return false;
+		return true;
 	}
 }

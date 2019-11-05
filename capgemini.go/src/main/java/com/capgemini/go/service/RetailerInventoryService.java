@@ -96,7 +96,7 @@ public interface RetailerInventoryService {
 	 * @return boolean (true: if item added | false: otherwise)
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
-	public boolean addItemToInventory (String retailerId, String productUIN) throws RetailerInventoryException;
+	public boolean addItemToInventory (String retailerId, byte productCategory, String productUIN) throws RetailerInventoryException;
 	
 	/*******************************************************************************************************
 	 * - Function Name : deleteItemFromInventory <br>
