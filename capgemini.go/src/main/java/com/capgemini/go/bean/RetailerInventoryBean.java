@@ -13,7 +13,7 @@ public class RetailerInventoryBean {
 	
 	// Getters
 	public String getRetailerId() {return retailerId;}
-	public String getRetialerName() {return retailerName;}
+	public String getRetailerName() {return retailerName;}
 	public byte getProductCategoryNumber() {return productCategoryNumber;}
 	public String getProductCategoryName() {return productCategoryName;}
 	public String getProductUniqueId() {return productUniqueId;}

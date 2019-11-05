@@ -42,7 +42,8 @@
 				<value>com.capgemini.go.dto.OrderDTO</value>
 				<value>com.capgemini.go.dto.OrderProductMapDTO</value>
 				<value>com.capgemini.go.dto.ProductDTO</value>
-				<value>com.capgemini.go.dto.ProductUinMapDTO</value>
+				<value>com.capgemini.go.dto.ProductIdentityDTO</value>
+				<value>com.capgemini.go.dto.ProductUINMapDTO</value>
 				<value>com.capgemini.go.dto.RetailerInventoryDTO</value>
 				<value>com.capgemini.go.dto.SalesRepDTO</value>
 				<value>com.capgemini.go.dto.UserDTO</value>

@@ -79,9 +79,36 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 	 * @return List<RetailerInventoryBean>
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
-	public List<RetailerInventoryBean> getYearlyShelfTimeReport(String retailerId, Calendar dateSelection)
+	public List<RetailerInventoryBean> getYearlyShelfTimeReport (String retailerId, Calendar dateSelection)
 			throws RetailerInventoryException {
-		return null;
+		List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
+		String retailerName = null;
+		
+		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO (retailerId, (byte)0, null, null, null, dateSelection );
+		List<RetailerInventoryDTO> listOfSoldItems = this.retailerInventoryDao.getSoldItemsDetails(queryArguments);
+		try {
+			retailerName = this.userDao.getUserById(retailerId).getUserName();
+			
+			for (RetailerInventoryDTO soldItem : listOfSoldItems) {
+				RetailerInventoryBean object = new RetailerInventoryBean ();
+				object.setRetailerId(retailerId);
+				object.setRetailerName(retailerName);
+				object.setProductCategoryNumber(soldItem.getProductCategory());
+				object.setProductCategoryName(GoUtility.getCategoryName(soldItem.getProductCategory()));
+				object.setProductUniqueId(soldItem.getProductUniqueId());
+				object.setShelfTimePeriod(GoUtility.calculatePeriod(soldItem.getProductReceiveTimestamp(), 
+						soldItem.getProductSaleTimestamp()));
+				result.add(object);
+			}
+			
+		} catch (UserException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getYearlyShelfTimeReport - " + ExceptionConstants.FAILED_TO_RETRIEVE_USERNAME);
+		} catch (RuntimeException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getYearlyShelfTimeReport - " + ExceptionConstants.INTERNAL_RUNTIME_ERROR);
+		}
+		return result;
 	}
 
 	/*******************************************************************************************************
@@ -161,7 +188,22 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getListOfRetailers() throws RetailerInventoryException {
-		return null;
+		List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
+		
+		List<RetailerInventoryDTO> listOfDeliveredItems = this.retailerInventoryDao.getListOfRetailers();
+		try {
+			for (RetailerInventoryDTO item : listOfDeliveredItems) {
+				String retailerName = this.userDao.getUserById(item.toString()).getUserName();
+				RetailerInventoryBean object = new RetailerInventoryBean ();
+				object.setRetailerId(item.toString());
+				object.setRetailerName(retailerName);
+				result.add(object);
+			}
+		} catch (UserException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getListOfRetailers - " + ExceptionConstants.FAILED_TO_RETRIEVE_USERNAME);
+		}
+		return result;
 	}
 
 	/*******************************************************************************************************
