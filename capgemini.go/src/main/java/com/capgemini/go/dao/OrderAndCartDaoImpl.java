@@ -47,12 +47,11 @@ public class OrderAndCartDaoImpl implements OrderAndCartDao {
 	public boolean addItemToCart(CartDTO cartItem) throws RetailerException {
 		boolean itemAdded = false;
 
-		CartDTO newItem = new CartDTO(cartItem.getUserId(), cartItem.getProductId(), cartItem.getQuantity());
 		Transaction transaction = null;
 		Session session = getSessionFactory().openSession();
 		try {
 			transaction = session.beginTransaction();
-			session.save(newItem);
+			session.save(cartItem);
 			transaction.commit();
 		} catch (IllegalStateException error) {
 			GoLog.getLogger(OrderAndCartDaoImpl.class).error(error.getMessage());

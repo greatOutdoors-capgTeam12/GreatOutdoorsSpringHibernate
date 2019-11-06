@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.go.dao.OrderAndCartDao;
-import com.capgemini.go.dao.OrderAndCartDaoImpl;
 import com.capgemini.go.dto.CartDTO;
 import com.capgemini.go.dto.OrderDTO;
 import com.capgemini.go.dto.OrderProductMapDTO;
@@ -39,8 +38,7 @@ public class OrderAndCartServiceImpl implements OrderAndCartService {
 	public boolean addItemToCart(CartDTO cartItem) throws RetailerException {
 
 		CartDTO newItem = new CartDTO(cartItem.getUserId(), cartItem.getProductId(), cartItem.getQuantity());
-		OrderAndCartDao ocd = new OrderAndCartDaoImpl();
-		boolean ItemAddedToCart = ocd.addItemToCart(newItem);
+		boolean ItemAddedToCart = orderAndCartDao.addItemToCart(newItem);
 		return ItemAddedToCart;
 	}
 
@@ -56,8 +54,8 @@ public class OrderAndCartServiceImpl implements OrderAndCartService {
 	@Override
 	public boolean removeItemFromCart(CartDTO cartItem) throws RetailerException {
 		CartDTO newItem = new CartDTO(cartItem.getUserId(), cartItem.getProductId(), 0);
-		OrderAndCartDao ocd = new OrderAndCartDaoImpl();
-		boolean ItemRemovedFromCart = ocd.removeItemFromCart(newItem);
+		
+		boolean ItemRemovedFromCart = orderAndCartDao.removeItemFromCart(newItem);
 		return ItemRemovedFromCart;
 	}
 
@@ -74,8 +72,8 @@ public class OrderAndCartServiceImpl implements OrderAndCartService {
 	@Override
 	public boolean updateItemQuantity(CartDTO cartItem) throws RetailerException {
 		CartDTO newItem = new CartDTO(cartItem.getUserId(), cartItem.getProductId(), cartItem.getQuantity());
-		OrderAndCartDao ocd = new OrderAndCartDaoImpl();
-		boolean updateItemQuantity = ocd.updateItemQuantity(newItem);
+		
+		boolean updateItemQuantity = orderAndCartDao.updateItemQuantity(newItem);
 		return updateItemQuantity;
 	}
 
@@ -93,8 +91,8 @@ public class OrderAndCartServiceImpl implements OrderAndCartService {
 	public boolean registerOrder(OrderDTO order) throws RetailerException {
 		OrderDTO newOrder = new OrderDTO(order.getOrderId(), (byte) 0, null, order.getUserId(), order.getAddressId(),
 				order.getOrderInitiateTime());
-		OrderAndCartDao ocd = new OrderAndCartDaoImpl();
-		boolean OrderRegister = ocd.registerOrder(newOrder);
+		
+		boolean OrderRegister =  orderAndCartDao.registerOrder(newOrder);
 		return OrderRegister;
 	}
 
@@ -114,8 +112,8 @@ public class OrderAndCartServiceImpl implements OrderAndCartService {
 		OrderProductMapDTO orderProductMap = new OrderProductMapDTO(orderProductMapEntity.getOrderId(),
 				orderProductMapEntity.getProductId(), orderProductMapEntity.getProductUIN(),
 				orderProductMapEntity.getProductStatus(), orderProductMapEntity.getGiftStatus());
-		OrderAndCartDao ocd = new OrderAndCartDaoImpl();
-		boolean OrderProductMapInserted = ocd.insertOrderProductMapEntity(orderProductMap);
+		
+		boolean OrderProductMapInserted = orderAndCartDao.insertOrderProductMapEntity(orderProductMap);
 		return OrderProductMapInserted;
 	}
 
@@ -133,8 +131,8 @@ public class OrderAndCartServiceImpl implements OrderAndCartService {
 
 		OrderProductMapDTO orderProductMap = new OrderProductMapDTO(orderProductMapEntity.getOrderId(),
 				orderProductMapEntity.getProductId(), orderProductMapEntity.getProductUIN(), 0, 0);
-		OrderAndCartDao ocd = new OrderAndCartDaoImpl();
-		boolean OrderProductMapDeleted = ocd.deleteOrderProductMapEntity(orderProductMap);
+		
+		boolean OrderProductMapDeleted =  orderAndCartDao.deleteOrderProductMapEntity(orderProductMap);
 		return OrderProductMapDeleted;
 	}
 
@@ -157,8 +155,7 @@ public class OrderAndCartServiceImpl implements OrderAndCartService {
 		prod.setProductUIN(productUIN);
 		ProductUINMapDTO itemTobeUpdated = new ProductUINMapDTO(prod, false);
 
-		OrderAndCartDao ocd = new OrderAndCartDaoImpl();
-		boolean productUinMapupdated = ocd.updateProductUinMap(itemTobeUpdated);
+		boolean productUinMapupdated =  orderAndCartDao.updateProductUinMap(itemTobeUpdated);
 		return productUinMapupdated;
 	}
 

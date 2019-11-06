@@ -1,11 +1,14 @@
 package com.capgemini.go.dao;
 
+import org.springframework.stereotype.Component;
+
 import com.capgemini.go.dto.CartDTO;
 import com.capgemini.go.dto.OrderDTO;
 import com.capgemini.go.dto.OrderProductMapDTO;
 import com.capgemini.go.dto.ProductUINMapDTO;
 import com.capgemini.go.exception.RetailerException;
 
+@Component
 public interface OrderAndCartDao {
 
 	// ORDER TABLE MANIPULATION FUNCTIONS

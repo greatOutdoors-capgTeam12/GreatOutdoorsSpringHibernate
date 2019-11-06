@@ -5,7 +5,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "PRODUCT_UIN_MAP")
 public class ProductUINMapDTO {
@@ -22,11 +21,10 @@ public class ProductUINMapDTO {
 	 * @param productUniqueIdentity
 	 * @param productIsPresent
 	 */
-	public ProductUINMapDTO()
-	{
-		
+	public ProductUINMapDTO() {
+
 	}
-	
+
 	public ProductUINMapDTO(ProductIdentityDTO productUniqueIdentity, boolean productIsPresent) {
 		super();
 		this.productUniqueIdentity = productUniqueIdentity;

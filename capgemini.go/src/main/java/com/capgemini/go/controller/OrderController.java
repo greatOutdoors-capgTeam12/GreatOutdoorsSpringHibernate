@@ -19,7 +19,7 @@ import com.google.gson.JsonObject;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/Orders")
+@RequestMapping("/Cart")
 public class OrderController {
 
 	@Autowired
@@ -36,17 +36,17 @@ public class OrderController {
 	}
 
 	@ResponseBody
-	@PostMapping("/AddItemServlet")
+	@PostMapping(value = "/AddItem")
 	public String addItemtoCart(@RequestBody Map<String, Object> requestData) {
 		CartDTO cartItem = new CartDTO();
-		System.out.println(requestData);
-		cartItem.setUserId(requestData.get("addItemuserId").toString());
 		cartItem.setProductId(requestData.get("addItemProdId").toString());
-		cartItem.setQuantity(Integer.valueOf(requestData.get("addItemProdQty").toString()));
+		cartItem.setUserId(requestData.get("addItemuserId").toString());
+		cartItem.setQuantity(Integer.parseInt(requestData.get("addItemProdQty").toString()));
 		boolean cart;
 		JsonObject cartObj = null;
 		try {
 			cart = orderAndCartService.addItemToCart(cartItem);
+
 			if (cart) {
 				cartObj = new JsonObject();
 				cartObj.addProperty("message", "Item added to cart scuccessfully");
@@ -55,9 +55,10 @@ public class OrderController {
 				cartObj.addProperty("message", "Unable to add item to cart");
 			}
 		} catch (RetailerException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+
 		return cartObj.toString();
 	}
 
@@ -70,18 +71,23 @@ public class OrderController {
 		boolean order = true;
 		JsonObject orderObj = null;
 		try {
+
 			order = orderAndCartService.registerOrder(ord);
+
 			if (order) {
 				orderObj = new JsonObject();
 				orderObj.addProperty("message", "Order placed scuccessfully");
+
 			} else {
 				orderObj = new JsonObject();
 				orderObj.addProperty("message", "Unable to place Order");
+
 			}
 		} catch (RetailerException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+
 		return orderObj.toString();
 	}
 
