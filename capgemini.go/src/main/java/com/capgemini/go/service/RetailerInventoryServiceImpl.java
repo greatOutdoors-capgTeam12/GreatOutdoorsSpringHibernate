@@ -55,8 +55,44 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getMonthlyShelfTimeReport(String retailerId, Calendar dateSelection)
 			throws RetailerInventoryException {
-		return null;
+     List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
+		
+		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO (retailerId, (byte)0, null, null, null, dateSelection );
+		List<RetailerInventoryDTO> listOfSoldItems = this.retailerInventoryDao.getSoldItemsDetails(queryArguments);
+		try {
+			List<UserDTO> userList = this.userDao.getUserIdList();
+			
+			for (RetailerInventoryDTO soldItem : listOfSoldItems) {
+				if (soldItem.getProductSaleTimestamp().get(Calendar.MONTH) == dateSelection.get(Calendar.MONTH)) {
+					RetailerInventoryBean object = new RetailerInventoryBean ();
+					object.setRetailerId(retailerId);
+					for (UserDTO user : userList) {
+						if (user.getUserId().equals(retailerId)) {
+							object.setRetailerName(user.getUserName());
+							break;
+						}
+					}
+					object.setProductCategoryNumber(soldItem.getProductCategory());
+					object.setProductCategoryName(GoUtility.getCategoryName(soldItem.getProductCategory()));
+					object.setProductUniqueId(soldItem.getProductUniqueId());
+					object.setShelfTimePeriod(GoUtility.calculatePeriod(soldItem.getProductReceiveTimestamp(), 
+							soldItem.getProductSaleTimestamp()));
+					object.setDeliveryTimePeriod(null);
+					result.add(object);
+				} else {
+					
+				}
+			}
+		} catch (UserException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getMonthlyShelfTimeReport - " + ExceptionConstants.FAILED_TO_RETRIEVE_USERNAME);
+		} catch (RuntimeException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getMonthlyShelfTimeReport - " + ExceptionConstants.INTERNAL_RUNTIME_ERROR);
+		}
+		return result;
 	}
+
 
 	/*******************************************************************************************************
 	 * - Function Name : getQuarterlyShelfTimeReport <br>
@@ -69,7 +105,39 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 	 *******************************************************************************************************/
 	public List<RetailerInventoryBean> getQuarterlyShelfTimeReport(String retailerId, Calendar dateSelection)
 			throws RetailerInventoryException {
-		return null;
+List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
+		
+		RetailerInventoryDTO queryArguments = new RetailerInventoryDTO (retailerId, (byte)0, null, null, null, dateSelection );
+		List<RetailerInventoryDTO> listOfSoldItems = this.retailerInventoryDao.getSoldItemsDetails(queryArguments);
+		try {
+			List<UserDTO> userList = this.userDao.getUserIdList();
+			
+			for (RetailerInventoryDTO soldItem : listOfSoldItems) {
+				RetailerInventoryBean object = new RetailerInventoryBean ();
+				object.setRetailerId(retailerId);
+				for (UserDTO user : userList) {
+					if (user.getUserId().equals(retailerId)) {
+						object.setRetailerName(user.getUserName());
+						break;
+					}
+				}
+				object.setProductCategoryNumber(soldItem.getProductCategory());
+				object.setProductCategoryName(GoUtility.getCategoryName(soldItem.getProductCategory()));
+				object.setProductUniqueId(soldItem.getProductUniqueId());
+				object.setShelfTimePeriod(GoUtility.calculatePeriod(soldItem.getProductReceiveTimestamp(), 
+						soldItem.getProductSaleTimestamp()));
+				object.setDeliveryTimePeriod(null);
+				result.add(object);
+			}
+			
+		} catch (UserException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getQuarterlyShelfTimeReport - " + ExceptionConstants.FAILED_TO_RETRIEVE_USERNAME);
+		} catch (RuntimeException error) {
+			GoLog.getLogger(RetailerInventoryServiceImpl.class).error(error.getMessage());
+			throw new RetailerInventoryException ("getQuarterlyShelfTimeReport - " + ExceptionConstants.INTERNAL_RUNTIME_ERROR);
+		}
+		return result;
 	}
 
 	/*******************************************************************************************************
