@@ -193,4 +193,25 @@ public class RetailerInventoryController {
 		GoLog.getLogger(RetailerInventoryController.class).info("getRetailerList - " + "Sent requested data");
 		return retailerList.toString();
 	}
+	
+	@ResponseBody
+	@PostMapping("/RetailerInventoryList")
+	public String getRetailerInventoryList (@RequestBody Map<String, Object> requestData) {
+		String retailerId = requestData.get("retailerId").toString();
+		GoLog.getLogger(RetailerInventoryController.class).info("getRetailerInventoryList - " + "Request for Retailer Inventory List Received");
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode dataResponse = mapper.createObjectNode();
+		JsonArray retailerList = new JsonArray();
+		
+		try {
+			List<RetailerInventoryBean> result = this.retailerInventoryService.getRetailerInventory(retailerId);
+			// convert result into JSON array
+		} catch (RetailerInventoryException error) {
+			GoLog.getLogger(RetailerInventoryController.class).error("getRetailerInventoryList - " + error.getMessage());
+			((ObjectNode) dataResponse).put("Error :", error.getMessage());
+			return dataResponse.toString();
+		}
+		GoLog.getLogger(RetailerInventoryController.class).info("getRetailerInventoryList - " + "Sent requested data");
+		return retailerList.toString();
+	}
 }

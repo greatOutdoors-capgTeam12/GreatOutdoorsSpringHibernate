@@ -369,4 +369,19 @@ List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
 		GoLog.getLogger(RetailerInventoryServiceImpl.class).info("updateItemSaleTimestamp - function return");
 		return itemUpdated;
 	}
+	
+	/*******************************************************************************************************
+	 * - Function Name : getRetailerInventory <br>
+	 * - Description : to get items in a given retailer's inventory <br>
+	 * 
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
+	public List<RetailerInventoryBean> getRetailerInventory (String retailerId) throws RetailerInventoryException {
+		GoLog.getLogger(RetailerInventoryServiceImpl.class).info("getRetailerInventory - function called with argument (" + retailerId + ")");
+		RetailerInventoryDTO queryArgument = new RetailerInventoryDTO(retailerId, (byte)0, null, null, null, null);
+		List<RetailerInventoryDTO> result =  this.retailerInventoryDao.getItemListByRetailer(queryArgument);
+		
+		return null;
+	}
 }

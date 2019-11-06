@@ -125,4 +125,13 @@ public interface RetailerInventoryService {
 	 * @throws RetailerInventoryException
 	 *******************************************************************************************************/
 	public boolean updateItemSaleTimestamp (String retailerId, String productUIN) throws RetailerInventoryException;
+	
+	/*******************************************************************************************************
+	 * - Function Name : getRetailerInventory <br>
+	 * - Description : to get items in a given retailer's inventory <br>
+	 * 
+	 * @return List<RetailerInventoryBean>
+	 * @throws RetailerInventoryException
+	 *******************************************************************************************************/
+	public List<RetailerInventoryBean> getRetailerInventory (String retailerId) throws RetailerInventoryException;
 }
