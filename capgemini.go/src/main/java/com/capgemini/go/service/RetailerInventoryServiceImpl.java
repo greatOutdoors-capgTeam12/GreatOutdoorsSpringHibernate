@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.go.bean.RetailerInventoryBean;
+import com.capgemini.go.dao.ProductDao;
 import com.capgemini.go.dao.RetailerInventoryDao;
 import com.capgemini.go.dao.UserDao;
 import com.capgemini.go.dto.RetailerInventoryDTO;
@@ -41,6 +42,17 @@ public class RetailerInventoryServiceImpl implements RetailerInventoryService {
 
 	public void setUserDao (UserDao userDao) {
 		this.userDao = userDao;
+	}
+	
+	@Autowired
+	private ProductDao productDao;
+
+	public ProductDao getProductDao() {
+		return productDao;
+	}
+
+	public void setProductDao(ProductDao productDao) {
+		this.productDao = productDao;
 	}
 	
 	// Shelf Time Report and Delivery Time Report
@@ -380,8 +392,25 @@ List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
 	public List<RetailerInventoryBean> getRetailerInventory (String retailerId) throws RetailerInventoryException {
 		GoLog.getLogger(RetailerInventoryServiceImpl.class).info("getRetailerInventory - function called with argument (" + retailerId + ")");
 		RetailerInventoryDTO queryArgument = new RetailerInventoryDTO(retailerId, (byte)0, null, null, null, null);
-		List<RetailerInventoryDTO> result =  this.retailerInventoryDao.getItemListByRetailer(queryArgument);
+		List<RetailerInventoryDTO> itemList =  this.retailerInventoryDao.getItemListByRetailer(queryArgument);
+		List<RetailerInventoryBean> result = new ArrayList<RetailerInventoryBean> ();
 		
-		return null;
+		for (RetailerInventoryDTO item : itemList) {
+			RetailerInventoryBean object = new RetailerInventoryBean ();
+			object.setRetailerId(item.getRetailerId());
+			try {
+				object.setRetailerName(this.userDao.getUserById(retailerId).getUserName());
+			} catch (UserException error) {
+				GoLog.getLogger(RetailerInventoryServiceImpl.class).error("getRetailerInventory - " + error.getMessage());
+				object.setRetailerName("Name Unavailable");
+			}
+			object.setProductCategoryNumber(item.getProductCategory());
+			object.setProductCategoryName(GoUtility.getCategoryName(item.getProductCategory()));
+			object.setProductUniqueId(item.getProductUniqueId());
+			object.setDeliveryTimePeriod(null);
+			object.setShelfTimePeriod(null);
+		}
+		
+		return result;
 	}
 }

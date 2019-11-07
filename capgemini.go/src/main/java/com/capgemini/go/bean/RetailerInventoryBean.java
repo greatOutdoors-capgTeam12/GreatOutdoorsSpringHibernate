@@ -8,6 +8,7 @@ public class RetailerInventoryBean {
 	private byte productCategoryNumber;
 	private String productCategoryName;
 	private String productUniqueId;
+	private String productName;
 	private Period deliveryTimePeriod;
 	private Period shelfTimePeriod;
 	
@@ -17,8 +18,9 @@ public class RetailerInventoryBean {
 	public byte getProductCategoryNumber() {return productCategoryNumber;}
 	public String getProductCategoryName() {return productCategoryName;}
 	public String getProductUniqueId() {return productUniqueId;}
+	public String getProductName() {return productName;}
 	public Period getDeliveryTimePeriod() {return deliveryTimePeriod;}
-	public Period getShelfTimePeriod() {return shelfTimePeriod;}
+	public Period getShelfTimePeriod() {return shelfTimePeriod;}	
 	
 	// Setters
 	public void setRetailerName(String retailerName) {this.retailerName = retailerName;}
@@ -26,6 +28,7 @@ public class RetailerInventoryBean {
 	public void setProductCategoryNumber(byte productCategoryNumber) {this.productCategoryNumber = productCategoryNumber;}
 	public void setProductCategoryName(String productCategoryName) {this.productCategoryName = productCategoryName;}
 	public void setProductUniqueId(String productUniqueId) {this.productUniqueId = productUniqueId;}
+	public void setProductName(String productName) {this.productName = productName;}
 	public void setDeliveryTimePeriod(Period deliveryTimePeriod) {this.deliveryTimePeriod = deliveryTimePeriod;}
 	public void setShelfTimePeriod(Period shelfTimePeriod) {this.shelfTimePeriod = shelfTimePeriod;}
 	
@@ -41,12 +44,13 @@ public class RetailerInventoryBean {
 	}
 	
 	public RetailerInventoryBean(String retailerId, String retailerName, byte productCategoryNumber,
-			String productCategoryName, String productUniqueId, Period deliveryTimePeriod, Period shelfTimePeriod) {
+			String productCategoryName, String productUniqueId, String productName, Period deliveryTimePeriod, Period shelfTimePeriod) {
 		this.retailerId = retailerId;
 		this.retailerName = retailerName;
 		this.productCategoryNumber = productCategoryNumber;
 		this.productCategoryName = productCategoryName;
 		this.productUniqueId = productUniqueId;
+		this.productName = productName;
 		this.deliveryTimePeriod = deliveryTimePeriod;
 		this.shelfTimePeriod = shelfTimePeriod;
 	}
